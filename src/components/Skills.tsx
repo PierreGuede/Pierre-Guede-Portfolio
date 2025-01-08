@@ -10,7 +10,7 @@ const Skills: FC = () => {
     { name: 'Nest.js', icon: <NestJsIcon/> },
     { name: 'Next.js', icon: <NextJsIcon/> },
     { name: 'Angular', icon: <AngularJsIcon/> }
-  ];
+  ]; 
 
   return (
     <section id="skills" className="py-20 px-4 bg-black bg-opacity-30">
