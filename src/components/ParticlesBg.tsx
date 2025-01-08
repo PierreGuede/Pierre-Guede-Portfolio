@@ -1,6 +1,13 @@
 // components/ParticlesBg.js
 import { useEffect, useCallback } from 'react';
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    particlesJS: any;
+  }
+}
+
 const ParticlesBg = () => {
   const initParticles = useCallback(() => {
     const particlesConfig = {
