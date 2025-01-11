@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 
 export interface Experience {
     company: string;
@@ -13,7 +14,7 @@ export interface Experience {
   
   export interface Skill {
     name: string;
-    icon: JSX.Element;
+    icon: ReactNode;
   }
 
   export interface SkillCategory {
