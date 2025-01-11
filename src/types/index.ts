@@ -20,4 +20,4 @@ export interface Experience {
   export interface SkillCategory {
     title: string;
     skills: Skill[];
-  }
+  } 
