@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { SkillCategory } from '../types';
 import { 
   AngularJsIcon, LaravelIcon, NestJsIcon, NextJsIcon, ReactJsIcon, VueJsIcon,
   GitHubIcon, GitIcon, VsCodeIcon, ClickUpIcon, SqlServerIcon, SqlIcon, PostgresIcon,
   WordPressIcon
 } from './SkillsIcon';
+import { Skill, SkillCategory } from '../types';
 
 const Skills: FC = () => {
   const skillCategories: SkillCategory[] = [
@@ -49,11 +49,11 @@ const Skills: FC = () => {
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold mb-12 text-[#00ff88]">Stack Technique</h2>
         <div className="flex flex-wrap gap-8">
-          {skillCategories.map((category, categoryIndex) => (
+          {skillCategories.map((category: SkillCategory, categoryIndex: number) => (
             <div key={categoryIndex} className="flex-1 min-w-[45%]">
               <h3 className="text-xl font-semibold mb-6 text-[#00ff88]">{category.title}</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                {category.skills.map((skill, skillIndex) => (
+                {category.skills.map((skill: Skill, skillIndex: number) => (
                   <div 
                     key={skillIndex} 
                     className="p-4 rounded-lg text-center bg-white bg-opacity-5 backdrop-blur-lg hover:bg-opacity-10 transition-all"
