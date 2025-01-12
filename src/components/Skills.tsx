@@ -48,7 +48,7 @@ const Skills: FC = () => {
     <section id="skills" className="py-20 px-4 bg-black bg-opacity-30">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold mb-12 text-[#00ff88]">Stack Technique</h2>
-        <div className="flex flex-wrap gap-8">
+        <div className="block lg:flex lg:flex-wrap lg:gap-8">
           {skillCategories.map((category: SkillCategory, categoryIndex: number) => (
             <div key={categoryIndex} className="flex-1 min-w-[45%]">
               <h3 className="text-xl font-semibold mb-6 text-[#00ff88]">{category.title}</h3>
