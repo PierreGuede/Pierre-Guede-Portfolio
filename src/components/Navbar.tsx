@@ -60,7 +60,7 @@ const Navbar = () => {
           isOpen ? 'translate-x-0' : 'translate-x-full '
         }`}
       >
-        <div className="flex flex-col space-y-4 p-4 bg-[#0a192f] h-screen">
+        <div className="flex flex-col space-y-4 p-4 bg-[#0a192f]/80 z-100 h-screen">
           {navItems.map(({ path, label }) => (
             <Link
               key={path}
