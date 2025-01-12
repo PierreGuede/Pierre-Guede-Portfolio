@@ -56,11 +56,11 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       <div
-        className={`md:hidden fixed top-16 left-0 right-0 bottom-0 bg-[#0a192f] transform transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`md:hidden fixed top-16 left-0 right-0 bottom-0  transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full '
         }`}
       >
-        <div className="flex flex-col space-y-4 p-4">
+        <div className="flex flex-col space-y-4 p-4 bg-[#0a192f] h-screen">
           {navItems.map(({ path, label }) => (
             <Link
               key={path}
