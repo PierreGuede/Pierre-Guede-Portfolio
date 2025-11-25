@@ -8,6 +8,10 @@ export interface Experience {
     name: string;
     description: string;
     technologies: string[];
+    longDescription?: string;
+    imageUrl?: string;
+    githubUrl?: string;
+    demoUrl?: string;
   }
   export interface Skill {
     name: string;

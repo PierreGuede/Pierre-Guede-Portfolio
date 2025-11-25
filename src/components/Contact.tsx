@@ -14,11 +14,15 @@ const Contact: FC = () => {
             </p>
             <p>
               <i className="fas fa-phone mr-2 text-[#00ff88]"></i>
-              +229 56 11 54 10
+              +229 01 56 11 54 10
+            </p>
+            <p>
+              <i className="fas fa-phone mr-2 text-[#00ff88]"></i>
+              +229 01 40 15 19 07
             </p>
             <p>
               <i className="fas fa-map-marker-alt mr-2 text-[#00ff88]"></i>
-              Abomey-Calavi, Bénin
+              132p,fignonhou, Abomey-Calavi, Bénin
             </p>
           </div>
         </div>

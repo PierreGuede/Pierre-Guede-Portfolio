@@ -4,6 +4,11 @@ import { Experience as ExperienceType } from '../types';
 const Experience: FC = () => {
   const experiences: ExperienceType[] = [
     {
+      company: 'HOMINTEC',
+      period: 'Novembre 2022 - Present',
+      description: 'Développement de solutions web et mobile avec Angular, NestJS, React, etc...'
+    },
+    {
       company: 'MTECH-BENIN',
       period: 'Novembre 2023 - Mars 2024',
       description: "Développement d'applications web avec Next.js, gestion de l'interface utilisateur et développement backend."
@@ -24,7 +29,7 @@ const Experience: FC = () => {
     <section id="experience" className="py-20 px-4">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-12 text-[#00ff88]">Expérience</h2>
-        <div className="space-y-12">
+        <div className="block md:grid md:grid-cols-2 space-y-12 md:space-x-12">
           {experiences.map((exp, index) => (
             <div 
               key={index} 

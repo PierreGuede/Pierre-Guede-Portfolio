@@ -32,13 +32,13 @@ const About: React.FC<AboutProps> = ({ className = '' }) => {
 
   return (
     <section id="about" className={`py-20 px-4 ${className}`}>
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-[#00ff88]">À propos de moi</h2>
-        <div className="grid md:grid-cols-2 gap-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 justify-center items-center align-center content-center text-center">
           <div 
             ref={aboutRef}
-            className="opacity-0 transform translate-y-6 transition-all duration-700 ease-out"
+            className="opacity-0 transform translate-y-6 transition-all duration-700 ease-out w-full text-left"
           >
+        <h2 className="text-3xl font-bold mb-8 text-[#00ff88]">À propos de moi</h2>
             <p className="mb-4">
               Développeur passionné par la création de solutions logicielles innovantes, 
               avec une expertise solide dans la conception et l'optimisation de logiciels.
@@ -52,7 +52,8 @@ const About: React.FC<AboutProps> = ({ className = '' }) => {
               solutions robustes et évolutives qui répondent aux besoins des utilisateurs.
             </p>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:flex justify-center items-center">
+            <img src="/memoji.png" alt="" className="w-3/6" />
             {/* Espace réservé pour une éventuelle image ou contenu supplémentaire */}
           </div>
         </div>
