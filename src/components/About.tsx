@@ -19,42 +19,49 @@ const About: React.FC<AboutProps> = ({ className = '' }) => {
       { threshold: 0.1 }
     );
 
-    if (aboutRef.current) {
-      observer.observe(aboutRef.current);
+    const current = aboutRef.current;
+    if (current) {
+      observer.observe(current);
     }
 
     return () => {
-      if (aboutRef.current) {
-        observer.unobserve(aboutRef.current);
-      }
+      if (current) observer.unobserve(current);
     };
   }, []);
 
   return (
-    <section id="about" className={`py-20 px-4 ${className}`}>
+    <section id="about" className={`py-20 px-4 scroll-mt-24 ${className}`}>
       <div className="max-w-5xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 justify-center items-center align-center content-center text-center">
           <div 
             ref={aboutRef}
-            className="opacity-0 transform translate-y-6 transition-all duration-700 ease-out w-full text-left"
+            className="opacity-0 transform translate-y-6 transition-all duration-700 ease-out w-full text-left cv-card p-8 rounded-lg"
           >
-        <h2 className="text-3xl font-bold mb-8 text-[#00ff88]">À propos de moi</h2>
+        <h2 className="text-3xl font-bold mb-8 section-title">À propos de moi</h2>
             <p className="mb-4">
-              Développeur passionné par la création de solutions logicielles innovantes, 
-              avec une expertise solide dans la conception et l'optimisation de logiciels.
+              Développeur fullstack passionné par la création de solutions innovantes, je suis motivé par les défis
+              et l’apprentissage continu. Rigoureux et autonome, j’aime travailler en équipe pour concevoir des
+              projets efficaces et adaptés aux besoins des utilisateurs.
             </p>
             <p className="mb-4">
-              Je m'efforce constamment d'apprendre de nouvelles technologies et de me 
-              tenir à jour avec les dernières tendances du développement web.
+              J’ai travaillé sur des plateformes de gestion des péages, du personnel, de la fiscalité et de
+              l’universitaire, du frontend au backend, avec Angular, React/Next.js, Laravel, NestJS, Spring Boot,
+              MySQL et PostgreSQL.
             </p>
-            <p className="mb-4">
-              Mon approche combine créativité et rigueur technique pour délivrer des
-              solutions robustes et évolutives qui répondent aux besoins des utilisateurs.
+            <p className="mb-6">
+              Actuellement à la recherche d’un poste de développeur, je suis ouvert à toute opportunité professionnelle.
             </p>
+            <div className="mt-6">
+              <h3 className="text-xl font-semibold mb-3 section-title">Langues</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Français — langue maternelle</li>
+                <li>Anglais — intermédiaire</li>
+                <li>Allemand — débutant</li>
+              </ul>
+            </div>
           </div>
           <div className="hidden md:flex justify-center items-center">
-            <img src="/memoji.png" alt="" className="w-3/6" />
-            {/* Espace réservé pour une éventuelle image ou contenu supplémentaire */}
+            <img src="/memoji.png" alt="Avatar Pierre Guede" className="w-3/6" />
           </div>
         </div>
       </div>
@@ -63,7 +70,3 @@ const About: React.FC<AboutProps> = ({ className = '' }) => {
 };
 
 export default About;
-
-// styles/about.css
-/* Ces styles peuvent être ajoutés à votre fichier CSS global */
-

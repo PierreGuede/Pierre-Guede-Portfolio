@@ -7,16 +7,15 @@ import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
-import ParticlesBg from './components/ParticlesBg';
 import About from './components/About';
+import Education from './components/Education';
 
 const App: FC = () => {
   return (
     <Router>
-      <div className="min-h-screen font-mono bg-[#0a192f] text-[#8892b0]">
-        <ParticlesBg />
+      <div className="app-shell min-h-screen font-mono text-[var(--cv-text)]">
         <Navbar />
-        <div className="content relative z-10">
+        <div className="content pt-16">
           <Routes>
             <Route path="/" element={
               <>
@@ -24,6 +23,7 @@ const App: FC = () => {
                 <About />
                 <Skills />
                 <Experience />
+                <Education />
                 <Projects />
                 <Contact />
               </>
@@ -31,6 +31,7 @@ const App: FC = () => {
             <Route path="/about" element={<About />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/experience" element={<Experience />} />
+            <Route path="/education" element={<Education />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
