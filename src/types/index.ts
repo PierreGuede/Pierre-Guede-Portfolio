@@ -1,7 +1,10 @@
 export interface Experience {
     company: string;
     period: string;
-    description: string;
+    role?: string;
+    description?: string;
+    bullets?: string[];
+    stack?: string[];
   }
   
   export interface Project {

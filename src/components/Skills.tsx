@@ -1,53 +1,62 @@
 import { FC } from 'react';
 import { 
   AngularJsIcon, LaravelIcon, NestJsIcon, NextJsIcon, ReactJsIcon, VueJsIcon,
-  GitHubIcon, GitIcon, VsCodeIcon, SqlIcon, PostgresIcon,
-  WordPressIcon
+ GitIcon, VsCodeIcon, SqlIcon, PostgresIcon,
+  WordPressIcon,
+  NodeJsIcon,
+  HtmlIcon,
+  CssIcon,
+  TailwindIcon,
+  PhpIcon,
+  ApiRestIcon,
+  GraphQlIcon,
+  DockerIcon,
+  SwaggerIcon,
+  PostmanIcon,
+  GitHubIcon
 } from './SkillsIcon';
 import { Skill, SkillCategory } from '../types';
+import { SpirngBootIcon } from './SkillsIcon';
 
 const Skills: FC = () => {
-  const textIcon = (label: string) => (
-    <div className="h-12 w-12 mx-auto rounded-full bg-[#efe6dc] text-[var(--cv-accent-strong)] flex items-center justify-center text-xs font-bold">
-      {label}
-    </div>
-  );
 
   const skillCategories: SkillCategory[] = [
     {
-      title: "Compétences Techniques",
+      title: "Frontend",
       skills: [
-        { name: 'Vue.js', icon: <VueJsIcon/> },
+        { name: 'Angular', icon: <AngularJsIcon/> },
+        { name: 'VueJS', icon: <VueJsIcon/> },
         { name: 'React', icon: <ReactJsIcon/> },
         { name: 'Next.js', icon: <NextJsIcon/> },
-        { name: 'Angular', icon: <AngularJsIcon/> },
+        { name: 'HTML5', icon: <HtmlIcon/> },
+        { name: 'CSS/SASS', icon: <CssIcon/>},
+        { name: 'Tailwind CSS', icon: <TailwindIcon/> }
+      ]
+    },
+    {
+      title: "Backend & API",
+      skills: [
+        { name: 'Java / Spring Boot', icon: <SpirngBootIcon/> },
         { name: 'NestJS', icon: <NestJsIcon/> },
+        { name: 'Node.js', icon: <NodeJsIcon/> },
         { name: 'Laravel', icon: <LaravelIcon/> },
-        { name: 'Node.js', icon: textIcon('Node') },
-        { name: 'Java (Spring Boot)', icon: textIcon('Java') },
+        { name: 'PHP', icon: <PhpIcon/> },
+        { name: 'API REST', icon: <ApiRestIcon/> },
+        { name: 'GraphQL', icon: <GraphQlIcon/> }
+      ]
+    },
+    {
+      title: "Données, DevOps & Outils",
+      skills: [
+        { name: 'PostgreSQL', icon: <PostgresIcon/> },
         { name: 'MySQL', icon: <SqlIcon/> },
-        { name: 'PostgreSQL', icon: <PostgresIcon/> }
-      ]
-    },
-    {
-      title: "Compétences en Développement Web",
-      skills: [
-        { name: 'Bootstrap', icon: textIcon('BS') },
-        { name: 'Tailwind CSS', icon: textIcon('TW') },
-        { name: 'API REST', icon: textIcon('API') },
-        { name: 'GraphQL', icon: textIcon('GQL') },
-        { name: 'WordPress', icon: <WordPressIcon/> }
-      ]
-    },
-    {
-      title: "Gestion de Projets & Collaboration",
-      skills: [
-        { name: 'Agile/Scrum', icon: textIcon('Agile') },
+        { name: 'Docker', icon: <DockerIcon/> },
         { name: 'Git', icon: <GitIcon/> },
         { name: 'GitHub', icon: <GitHubIcon/> },
-        { name: 'Jira', icon: textIcon('Jira') },
-        { name: 'Trello', icon: textIcon('Tre') },
-        { name: 'VS Code', icon: <VsCodeIcon/> }
+        { name: 'Swagger / OpenAPI', icon: <SwaggerIcon/> },
+        { name: 'Postman', icon: <PostmanIcon/> },
+        { name: 'VS Code', icon: <VsCodeIcon/> },
+        { name: 'WordPress', icon: <WordPressIcon/> }
       ]
     }
   ];
@@ -55,16 +64,22 @@ const Skills: FC = () => {
   return (
     <section id="skills" className="py-20 px-4 scroll-mt-24">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold mb-12 section-title">Compétences</h2>
-        <div className="block lg:flex lg:flex-wrap lg:gap-8">
+        <div className="max-w-3xl mb-12">
+          <h2 className="text-3xl font-bold section-title">Compétences</h2>
+          <p className="mt-4 text-[var(--cv-text-muted)] leading-7">
+            Une stack fullstack orientée applications métier : interfaces modernes, services backend, bases de données,
+            API documentées, conteneurisation et maintenance en exploitation.
+          </p>
+        </div>
+        <div className="grid lg:grid-cols-3 gap-8">
           {skillCategories.map((category: SkillCategory, categoryIndex: number) => (
-            <div key={categoryIndex} className="flex-1 min-w-[45%]">
+            <div key={categoryIndex}>
               <h3 className="text-xl font-semibold mb-6 text-[var(--cv-accent)]">{category.title}</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-4">
                 {category.skills.map((skill: Skill, skillIndex: number) => (
                   <div 
                     key={skillIndex} 
-                    className="p-4 rounded-lg text-center cv-card hover:shadow-md transition-all"
+                    className="p-4 min-h-32 rounded-lg text-center cv-card hover:shadow-md transition-all flex flex-col justify-center"
                   >
                     <div className="h-12 w-12 mx-auto mb-2">
                       {skill.icon}

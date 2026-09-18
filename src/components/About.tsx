@@ -32,36 +32,39 @@ const About: React.FC<AboutProps> = ({ className = '' }) => {
   return (
     <section id="about" className={`py-20 px-4 scroll-mt-24 ${className}`}>
       <div className="max-w-5xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-8 justify-center items-center align-center content-center text-center">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-stretch">
           <div 
             ref={aboutRef}
-            className="opacity-0 transform translate-y-6 transition-all duration-700 ease-out w-full text-left cv-card p-8 rounded-lg"
+            className="opacity-0 transform translate-y-6 transition-all duration-700 ease-out w-full text-left cv-card p-6 sm:p-8 rounded-lg"
           >
-        <h2 className="text-3xl font-bold mb-8 section-title">À propos de moi</h2>
-            <p className="mb-4">
-              Développeur fullstack passionné par la création de solutions innovantes, je suis motivé par les défis
-              et l’apprentissage continu. Rigoureux et autonome, j’aime travailler en équipe pour concevoir des
-              projets efficaces et adaptés aux besoins des utilisateurs.
+        <h2 className="text-3xl font-bold mb-6 section-title">À propos</h2>
+            <p className="mb-4 leading-8 text-[var(--cv-text-muted)]">
+              Développeur fullstack spécialisé dans la conception et le développement de plateformes web et de
+              solutions numériques. Je m'intéresse particulièrement aux applications performantes, sécurisées,
+              maintenables et adaptées aux usages réels.
             </p>
-            <p className="mb-4">
-              J’ai travaillé sur des plateformes de gestion des péages, du personnel, de la fiscalité et de
-              l’universitaire, du frontend au backend, avec Angular, React/Next.js, Laravel, NestJS, Spring Boot,
-              MySQL et PostgreSQL.
+            <p className="mb-4 leading-8 text-[var(--cv-text-muted)]">
+              Mon parcours m'a amené à travailler sur des plateformes de gestion des péages, du personnel, des
+              opérations internes, de la fiscalité, de la paie et de la gestion universitaire. J'interviens autant sur
+              l'interface que sur les API, les modèles de données, l'intégration de services et la maintenance.
             </p>
-            <p className="mb-6">
-              Actuellement à la recherche d’un poste de développeur, je suis ouvert à toute opportunité professionnelle.
+            <p className="leading-8 text-[var(--cv-text-muted)]">
+              Je suis rigoureux, autonome, habitué à collaborer avec des équipes métier et techniques, et attentif à
+              la qualité du code livré en production.
             </p>
-            <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-3 section-title">Langues</h3>
-              <ul className="list-disc pl-5 space-y-1">
-                <li>Français — langue maternelle</li>
-                <li>Anglais — intermédiaire</li>
-                <li>Allemand — débutant</li>
-              </ul>
-            </div>
           </div>
-          <div className="hidden md:flex justify-center items-center">
-            <img src="/memoji.png" alt="Avatar Pierre Guede" className="w-3/6" />
+          <div className="grid gap-4">
+            {[
+              ["Applications métier", "Péages, personnel, opérations internes, fiscalité et gestion universitaire."],
+              ["Intégration & API", "REST, GraphQL, Swagger/OpenAPI, services de paiement et notifications."],
+              ["Qualité & support", "Tests unitaires, tests fonctionnels, débogage, maintenance corrective et évolutive."],
+              ["IA responsable", "Assistance au développement, documentation, analyse technique et revue humaine systématique."],
+            ].map(([title, text]) => (
+              <div key={title} className="cv-card rounded-lg p-5">
+                <h3 className="font-bold text-[var(--cv-accent-strong)]">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--cv-text-muted)]">{text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

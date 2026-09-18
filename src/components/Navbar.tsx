@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react'; 
+import { Download, Menu, X } from 'lucide-react'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,30 +18,31 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed w-full bg-[#f7f4f1]/90 backdrop-blur-lg border-b border-[var(--cv-border)] z-50">
+    <nav className="fixed w-full bg-[rgba(255,253,247,0.9)] backdrop-blur-lg border-b border-[var(--cv-border)] z-50">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="text-2xl font-bold text-[var(--cv-accent-strong)]">
+          <a href="#" className="text-2xl font-black text-[var(--cv-accent-strong)]">
             PMG
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8 items-center">
             {navItems.map(({ path, label }) => (
-              <Link
+              <a
                 key={path}
-                to={`/${path}`}
+                href={`#${path}`}
                 className="text-[var(--cv-text)] hover:text-[var(--cv-accent)] transition-colors duration-300 relative nav-link"
               >
                 {label}
-              </Link>
+              </a>
             ))}
             <a
               href="/CV_PIERRE_MAURIL_MAFOYA_GUEDE.pdf"
               download
-              className="px-4 py-2 cv-button-outline rounded-md transition-colors duration-300"
+              className="inline-flex items-center gap-2 px-4 py-2 cv-button-outline rounded-md transition-colors duration-300 font-semibold"
             >
-              Télécharger CV
+              <Download size={16} />
+              CV
             </a>
           </div>
 
@@ -67,16 +67,16 @@ const Navbar = () => {
           isOpen ? 'translate-x-0' : 'translate-x-full '
         }`}
       >
-        <div className="flex flex-col space-y-4 p-4 bg-[#f7f4f1] h-screen">
+        <div className="flex flex-col space-y-4 p-4 bg-[var(--cv-surface)] h-screen">
           {navItems.map(({ path, label }) => (
-            <Link
+            <a
               key={path}
-              to={`/${path}`}
+              href={`#${path}`}
               className="text-[var(--cv-text)] hover:text-[var(--cv-accent)] transition-colors duration-300 text-lg py-2"
               onClick={() => setIsOpen(false)}
             >
               {label}
-            </Link>
+            </a>
           ))}
           <a
             href="/CV_PIERRE_MAURIL_MAFOYA_GUEDE.pdf"
