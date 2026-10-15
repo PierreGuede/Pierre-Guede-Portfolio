@@ -22,36 +22,28 @@ const Projects: FC = () => {
 
   const projects: Project[] = [
     {
-      name: 'Gate-24',
-      description: 'Plateforme métier de gestion des péages, passages et transactions',
-      technologies: ['Angular', 'NestJS', 'PostgreSQL', 'Docker', 'API REST'],
-      longDescription: "Gate-24 centralise les opérations liées aux postes de péage : suivi des passages, transactions, gestion opérationnelle et intégration avec des services de paiement et des terminaux TPE. Le projet met l'accent sur la fiabilité, la traçabilité des opérations et la maintenabilité du socle applicatif.",
+      name: 'HomQueue',
+      description: 'Application backend de gestion de files d\'attente multi-domaines',
+      technologies: ['SpringBoot', 'WebSocket', 'PostgreSQL', 'Docker', 'API REST'],
+      longDescription: "HomQueue est une application backend exploitable pour gérer les files d'attente de type banque, super-marché et autres domaines. Le système intègre des fonctionnalités avancées : gestion de rendez-vous avec création automatique de tickets prioritaires, prédictions IA pour l'optimisation du staffing, système de priorisation intelligent (VIP, rendez-vous), notifications en temps réel (SMS/Push), analytics et performance en temps réel, et intégration WebSocket pour les mises à jour live. Le projet met l'accent sur l'expérience utilisateur et l'optimisation opérationnelle grâce à l'analyse de données.",
       imageUrl:'',
+      githubUrl: 'https://github.com/PierreGuede/queue-waiter-list',
     },
     {
-      name: 'Solution de réservation & file d’attente',
-      description: 'Gestion de tickets, files d’attente et notifications',
-      technologies: ['Angular', 'NestJS', 'API REST', 'Notifications'],
-      longDescription: "Solution destinée à fluidifier la réservation de tickets et la gestion des files d'attente. Elle combine des interfaces utilisateurs, des services backend et des notifications pour améliorer le suivi des demandes et l'expérience des utilisateurs.",
+      name: 'Fiscality',
+      description: 'Application web de gestion de fiscalité',
+      technologies: ['Laravel', 'Livewire', 'MySQL', 'Livewire PowerGrid'],
+      longDescription: "Fiscality est une application web complète de gestion fiscale développée avec Laravel et Livewire. Elle offre une interface réactive sans rechargement de page grâce à Livewire, inclut des fonctionnalités avancées comme PowerGrid pour la gestion des données, export Excel avec Maatwebsite, gestion des permissions avec Spatie Laravel Permission, interface moderne avec WireUI, et système de notifications. L'application simplifie le suivi des obligations fiscales et la génération de rapports.",
       imageUrl:'',
+      githubUrl: 'https://github.com/PierreGuede/Fiscality',
     },
     {
-      name: 'TEC-SCHOOL',
-      description: 'Application de gestion globale pour les universités',
-      technologies: ['Laravel', 'VueJS', 'MySQL'],
-      longDescription: 'TEC-SCHOOL est une application complète de gestion universitaire permettant de gérer les inscriptions, les cours, les notes, les paiements et la communication entre étudiants et professeurs. Elle offre une interface intuitive pour simplifier les processus administratifs.',
+      name: 'KoriGoApi',
+      description: 'API de service de livraison repensée pour le Tchad',
+      technologies: ['SpringBoot', 'PostgreSQL', 'SpringDoc OpenAPI', 'Lombok'],
+      longDescription: "KoriGoApi est une API REST développée avec Spring Boot 4.0.4 et Java 21 pour un service de livraison adapté au contexte tchadien. Le projet inclut une architecture CRUD complète, documentation API automatique avec SpringDoc OpenAPI, persistance avec PostgreSQL et Spring Data JPA, validation de données, sécurité avec Spring Security Crypto, et tests unitaires. Cette API vise à moderniser les services de livraison en Afrique centrale avec une architecture scalable et maintenable.",
       imageUrl:'',
-      githubUrl: 'https://github.com/pierre-guede/tec-school',
-      // demoUrl: 'https://tec-school.example.com'
-    },
-    {
-      name: 'TEC-IT',
-      description: 'Application de gestion de la fiscalité',
-      technologies: ['Laravel', 'MySQL'],
-      longDescription: 'TEC-IT est une solution innovante pour la gestion fiscale des entreprises. Elle permet de suivre les obligations fiscales, générer des rapports automatisés, et optimiser la conformité fiscale grâce à des alertes intelligentes et des tableaux de bord personnalisables.',
-      imageUrl:'',
-      githubUrl: 'https://github.com/pierre-guede/tec-it',
-      // demoUrl: 'https://tec-it.example.com'
+      githubUrl: 'https://github.com/PierreGuede/korigo-api',
     }
   ];
 
