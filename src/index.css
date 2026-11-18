@@ -250,7 +250,7 @@ a:hover .contact-arrow { transform: translate(2px,-2px); color: var(--cv-accent)
   .skills-story-panel-top { min-height: 95px; }
   .skills-story-list { margin-top: 1rem; }
   .footer-name-wrap { padding-top: 2rem; }
-  .footer-name { font-size: clamp(2rem, 9vw, 3.5rem); transform: translateX(-50%) scaleX(.65) scaleY(1.18); }
+  .footer-name { font-size: clamp(2.6rem, 12.5vw, 5rem); transform: translateX(-50%) scaleX(.6) scaleY(2.8); }
 }
 
 @media (min-width: 1024px) {
