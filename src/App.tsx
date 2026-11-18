@@ -8,6 +8,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import About from './components/About';
 import Education from './components/Education';
+import Footer from './components/Footer';
 
 const App: FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: FC = () => {
         <Projects />
         <Contact />
       </div>
+      <Footer />
     </div>
   );
 };

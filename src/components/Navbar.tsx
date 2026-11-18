@@ -9,6 +9,7 @@ const Navbar = () => {
   };
 
   const navItems = [
+    { path: 'home', label: 'Accueil' },
     { path: 'about', label: 'À propos' },
     { path: 'skills', label: 'Compétences' },
     { path: 'experience', label: 'Expérience' },
@@ -21,7 +22,7 @@ const Navbar = () => {
     <nav className="fixed w-full bg-[rgba(255,253,247,0.9)] backdrop-blur-lg border-b border-[var(--cv-border)] z-50">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <a href="#" className="text-2xl font-black text-[var(--cv-accent-strong)]">
+          <a href="#home" aria-label="Retour à l’accueil" className="text-2xl font-black text-[var(--cv-accent-strong)]">
             PMG
           </a>
 
@@ -50,7 +51,8 @@ const Navbar = () => {
           <button 
             onClick={toggleMenu} 
             className="md:hidden text-[var(--cv-text)] p-2 focus:outline-none"
-            aria-label="Toggle menu"
+            aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={isOpen}
           >
             {isOpen ? (
               <X className="h-6 w-6" />

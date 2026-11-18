@@ -1,186 +1,141 @@
-import { FC, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Project } from '../types';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, X } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, Check, Code2, ExternalLink, Github, Layers3, Radio, X } from 'lucide-react';
 
-const Projects: FC = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+type PortfolioProject = Project & { category: string; state: string; accent: string; architecture: string[] };
 
-  const openModal = (project: Project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-    // Empêcher le défilement du body quand le modal est ouvert
+const projects: PortfolioProject[] = [
+  {
+    name: 'HomQueue', category: 'Gestion de files d’attente', state: 'Backend · en développement', accent: 'teal',
+    description: 'Une base backend pour organiser les files, rendez-vous et priorités dans des environnements à forte affluence.',
+    technologies: ['Spring Boot', 'WebSocket', 'PostgreSQL', 'Docker', 'API REST'],
+    longDescription: 'HomQueue explore la gestion de files d’attente multi-domaines : création de tickets et rendez-vous, priorisation et actualisation en temps réel. Le projet met l’accent sur la coordination des flux et la structure du service backend.',
+    architecture: ['Clients & opérateurs', 'API REST · WebSocket', 'Règles de file & priorités', 'PostgreSQL'],
+    githubUrl: 'https://github.com/PierreGuede/queue-waiter-list',
+  },
+  {
+    name: 'Fiscality', category: 'Gestion fiscale', state: 'Application · code public', accent: 'warm',
+    description: 'Une application de gestion fiscale pensée pour structurer les dossiers, les opérations et les rapports.',
+    technologies: ['Laravel', 'Livewire', 'MySQL', 'PowerGrid', 'Maatwebsite'],
+    longDescription: 'Fiscality est développée avec Laravel et Livewire. Le projet s’appuie sur des composants de gestion de données, l’export Excel, la gestion des permissions et les notifications pour simplifier le suivi des obligations et la production de rapports.',
+    architecture: ['Interface Livewire', 'Services Laravel', 'Permissions & notifications', 'MySQL · exports'],
+    githubUrl: 'https://github.com/PierreGuede/Fiscality',
+  },
+  {
+    name: 'KoriGo API', category: 'Livraison · Tchad', state: 'API · déploiement à venir', accent: 'blue',
+    description: 'Une API REST pour les services de livraison, conçue autour des opérations et du contexte local.',
+    technologies: ['Spring Boot', 'Java 21', 'PostgreSQL', 'SpringDoc OpenAPI', 'JPA'],
+    longDescription: 'KoriGo API est un service REST construit avec Spring Boot et Java 21. Il comprend une architecture CRUD, la documentation OpenAPI, la validation des données, la persistance PostgreSQL et des tests unitaires.',
+    architecture: ['Clients & livreurs', 'API REST · OpenAPI', 'Services & validation', 'JPA · PostgreSQL'],
+    githubUrl: 'https://github.com/PierreGuede/korigo-api',
+  },
+];
+
+const Projects = () => {
+  const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!selectedProject) return;
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    // Restaurer le défilement du body quand le modal est fermé
-    document.body.style.overflow = 'auto';
-  };
-
-  const projects: Project[] = [
-    {
-      name: 'HomQueue',
-      description: 'Application backend de gestion de files d\'attente multi-domaines',
-      technologies: ['SpringBoot', 'WebSocket', 'PostgreSQL', 'Docker', 'API REST'],
-      longDescription: "HomQueue est une application backend exploitable pour gérer les files d'attente de type banque, super-marché et autres domaines. Le système intègre des fonctionnalités avancées : gestion de rendez-vous avec création automatique de tickets prioritaires, prédictions IA pour l'optimisation du staffing, système de priorisation intelligent (VIP, rendez-vous), notifications en temps réel (SMS/Push), analytics et performance en temps réel, et intégration WebSocket pour les mises à jour live. Le projet met l'accent sur l'expérience utilisateur et l'optimisation opérationnelle grâce à l'analyse de données.",
-      imageUrl:'',
-      githubUrl: 'https://github.com/PierreGuede/queue-waiter-list',
-    },
-    {
-      name: 'Fiscality',
-      description: 'Application web de gestion de fiscalité',
-      technologies: ['Laravel', 'Livewire', 'MySQL', 'Livewire PowerGrid'],
-      longDescription: "Fiscality est une application web complète de gestion fiscale développée avec Laravel et Livewire. Elle offre une interface réactive sans rechargement de page grâce à Livewire, inclut des fonctionnalités avancées comme PowerGrid pour la gestion des données, export Excel avec Maatwebsite, gestion des permissions avec Spatie Laravel Permission, interface moderne avec WireUI, et système de notifications. L'application simplifie le suivi des obligations fiscales et la génération de rapports.",
-      imageUrl:'',
-      githubUrl: 'https://github.com/PierreGuede/Fiscality',
-    },
-    {
-      name: 'KoriGoApi',
-      description: 'API de service de livraison repensée pour le Tchad',
-      technologies: ['SpringBoot', 'PostgreSQL', 'SpringDoc OpenAPI', 'Lombok'],
-      longDescription: "KoriGoApi est une API REST développée avec Spring Boot 4.0.4 et Java 21 pour un service de livraison adapté au contexte tchadien. Le projet inclut une architecture CRUD complète, documentation API automatique avec SpringDoc OpenAPI, persistance avec PostgreSQL et Spring Data JPA, validation de données, sécurité avec Spring Security Crypto, et tests unitaires. Cette API vise à moderniser les services de livraison en Afrique centrale avec une architecture scalable et maintenable.",
-      imageUrl:'',
-      githubUrl: 'https://github.com/PierreGuede/korigo-api',
-    }
-  ];
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') setSelectedProject(null); };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [selectedProject]);
 
   return (
     <section id="projects" className="py-20 px-4 relative scroll-mt-24">
       <div className="max-w-6xl mx-auto">
-        <div className="max-w-3xl mb-12">
-          <h2 className="text-3xl font-bold section-title">Projets</h2>
-          <p className="mt-4 text-[var(--cv-text-muted)] leading-7">
-            Un aperçu des plateformes métier et solutions numériques sur lesquelles j'ai contribué, avec une priorité
-            donnée à la valeur opérationnelle, aux API et à la qualité de maintenance.
-          </p>
+        <div className="projects-heading mb-12 grid items-end gap-6 md:grid-cols-[1fr_auto]">
+          <div className="max-w-3xl">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--cv-accent)]">Quelques systèmes que je construis</p>
+            <h2 className="text-3xl font-bold section-title sm:text-4xl">Projets en cours de route</h2>
+            <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">
+              Des projets personnels autour de besoins concrets. Certains sont des backends sans interface publique pour le moment : leur architecture et leur code racontent déjà le travail réalisé.
+            </p>
+          </div>
+          <a href="https://github.com/PierreGuede" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--cv-accent-strong)] transition-colors hover:text-[var(--cv-accent)]">
+            Tous mes dépôts <ArrowUpRight size={17} />
+          </a>
         </div>
-        <div className="grid md:grid-cols-2 gap-8">
+
+        <div className="project-grid grid gap-6 lg:grid-cols-3">
           {projects.map((project, index) => (
-            <div 
-              key={index} 
-              className="p-6 rounded-lg cv-card cursor-pointer transition-all duration-300 hover:shadow-md"
-              onClick={() => openModal(project)}
+            <motion.article
+              key={project.name}
+              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.18 }}
+              transition={{ duration: 0.55, delay: index * 0.11, ease: 'easeOut' }}
+              className={`project-card cv-card group flex flex-col overflow-hidden rounded-2xl project-${project.accent}`}
             >
-              <h3 className="text-xl font-bold text-[var(--cv-text)] mb-4">{project.name}</h3>
-              <p className="mb-4 leading-7 text-[var(--cv-text-muted)]">{project.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, techIndex) => (
-                  <span
-                    key={techIndex}
-                    className="px-3 py-1 text-sm cv-tag rounded"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <button 
-                className="mt-4 px-4 py-2 cv-button-primary rounded-md font-medium transition-all"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal(project);
-                }}
-              >
-                Voir détails
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Modal avec effet de fade */}
-      <AnimatePresence>
-        {isModalOpen && selectedProject && (
-          <>
-            {/* Overlay avec effet de fade */}
-            <motion.div 
-              className="fixed inset-0 bg-black/60 z-40 flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={closeModal}
-            >
-              {/* Contenu du modal avec effet de fade et scale */}
-              <motion.div 
-                className="bg-[#fbf9f7] text-[var(--cv-text)] rounded-xl max-w-2xl w-full p-6 overflow-y-auto max-h-[90vh] z-50 border border-[var(--cv-border)]"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ type: 'spring', damping: 20 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl font-bold text-[var(--cv-accent-strong)]">{selectedProject.name}</h3>
-                  <button 
-                    onClick={closeModal}
-                    className="text-slate-500 hover:text-slate-800 transition-colors"
-                  >
-                    <X size={24} />
-                  </button>
-                </div>
-
-                {selectedProject.imageUrl && (
-                  <div className="mb-6 rounded-lg overflow-hidden">
-                    <img 
-                      src={selectedProject.imageUrl} 
-                      alt={selectedProject.name} 
-                      className="w-full h-auto object-cover"
-                      onError={(e) => {
-                        // Fallback si l'image n'existe pas
-                        e.currentTarget.src = 'https://via.placeholder.com/800x400?text=Image+Non+Disponible';
-                      }}
-                    />
+              <button type="button" onClick={() => setSelectedProject(project)} className="flex h-full flex-col text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--cv-accent)]" aria-label={`Découvrir le projet ${project.name}`}>
+                <div className="project-visual relative m-3 mb-0 overflow-hidden rounded-xl p-5 sm:p-6">
+                  <div className="project-visual-grid" aria-hidden="true" />
+                  <div className="relative z-10 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[var(--cv-border)] bg-[var(--cv-surface)]/85 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-[var(--cv-text-muted)]"><Code2 size={13} /> Backend / API</span>
+                    <span className="font-mono text-xs text-[var(--cv-text-muted)]">0{index + 1}</span>
                   </div>
-                )}
-
-                <div className="mb-6">
-                  <h4 className="text-xl font-semibold mb-2">Description</h4>
-                  <p className="text-[var(--cv-text-muted)]">{selectedProject.longDescription || selectedProject.description}</p>
-                </div>
-
-                <div className="mb-6">
-                  <h4 className="text-xl font-semibold mb-2">Technologies</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedProject.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-3 py-1 text-sm cv-tag rounded"
-                      >
-                        {tech}
-                      </span>
+                  <div className="project-flow relative z-10 mt-6 space-y-2">
+                    {project.architecture.map((layer, layerIndex) => (
+                      <div key={layer} className="project-layer flex items-center gap-3 rounded-lg border border-[var(--cv-border)] bg-[var(--cv-surface)]/90 px-3 py-2.5" style={{ marginLeft: `${layerIndex * 8}px`, marginRight: `${layerIndex * 8}px` }}>
+                        <span className={`project-layer-index ${layerIndex === project.architecture.length - 1 ? 'is-last' : ''}`}>{layerIndex === 0 ? <Radio size={13} /> : layerIndex === project.architecture.length - 1 ? <Layers3 size={13} /> : <span>{String(layerIndex).padStart(2, '0')}</span>}</span>
+                        <span className="text-xs font-semibold text-[var(--cv-text)] sm:text-sm">{layer}</span>
+                        {layerIndex < project.architecture.length - 1 && <span className="ml-auto h-px flex-1 bg-[var(--cv-border)]" />}
+                      </div>
                     ))}
                   </div>
+                  <div className="mt-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-[var(--cv-text-muted)]"><span className="h-1.5 w-1.5 rounded-full bg-[var(--cv-accent)]" /> Architecture snapshot</div>
                 </div>
 
-                <div className="flex gap-4">
-                  {selectedProject.githubUrl && (
-                    <a 
-                      href={selectedProject.githubUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 bg-slate-900 text-white rounded-md font-medium hover:opacity-90 transition-all flex items-center gap-2"
-                    >
-                      <Github size={16} />
-                      GitHub
-                    </a>
-                  )}
-                  {selectedProject.demoUrl && (
-                    <a 
-                      href={selectedProject.demoUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 cv-button-primary rounded-md font-medium transition-all flex items-center gap-2"
-                    >
-                      <ExternalLink size={16} />
-                      Démo
-                    </a>
-                  )}
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--cv-accent)]">{project.category}</span>
+                    <span className="rounded-full bg-[var(--cv-surface-strong)] px-2.5 py-1 text-[11px] font-semibold text-[var(--cv-text-muted)]">{project.state}</span>
+                  </div>
+                  <h3 className="mt-3 text-2xl font-black text-[var(--cv-text)]">{project.name}</h3>
+                  <p className="mt-2 flex-1 leading-7 text-[var(--cv-text-muted)]">{project.description}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {project.technologies.map((tech) => <span key={tech} className="cv-tag rounded px-2.5 py-1 text-xs font-medium">{tech}</span>)}
+                  </div>
+                  <div className="mt-6 flex items-center justify-between border-t border-[var(--cv-border)] pt-4 text-sm font-semibold text-[var(--cv-accent-strong)]">
+                    <span>Explorer le projet</span><span className="project-arrow flex h-8 w-8 items-center justify-center rounded-full border border-[var(--cv-border)]"><ArrowUpRight size={17} /></span>
+                  </div>
                 </div>
-              </motion.div>
+              </button>
+            </motion.article>
+          ))}
+        </div>
+        <p className="mt-5 text-xs leading-5 text-[var(--cv-text-muted)]">Les schémas illustrent les couches du projet à titre de repère. Les démonstrations publiques seront ajoutées au fil des déploiements.</p>
+      </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div className="fixed inset-0 z-[60] flex items-center justify-center bg-[var(--cv-text)]/45 p-4 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedProject(null)}>
+            <motion.div role="dialog" aria-modal="true" aria-labelledby="project-dialog-title" className="project-dialog cv-card max-h-[90svh] w-full max-w-2xl overflow-y-auto rounded-2xl p-6 sm:p-8" initial={{ opacity: 0, y: 20, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: 0.98 }} transition={{ duration: 0.22 }} onClick={(event) => event.stopPropagation()}>
+              <div className="flex items-start justify-between gap-4">
+                <div><p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--cv-accent)]">{selectedProject.category}</p><h3 id="project-dialog-title" className="mt-2 text-3xl font-black text-[var(--cv-accent-strong)]">{selectedProject.name}</h3><p className="mt-2 text-sm text-[var(--cv-text-muted)]">{selectedProject.state}</p></div>
+                <button type="button" aria-label="Fermer les détails" onClick={() => setSelectedProject(null)} className="rounded-full border border-[var(--cv-border)] p-2 text-[var(--cv-text-muted)] transition-colors hover:bg-[var(--cv-surface-strong)]"><X size={20} /></button>
+              </div>
+              <p className="mt-7 leading-7 text-[var(--cv-text-muted)]">{selectedProject.longDescription}</p>
+              <div className="mt-7">
+                <h4 className="font-bold text-[var(--cv-text)]">Technologies & outils</h4>
+                <div className="mt-3 flex flex-wrap gap-2">{selectedProject.technologies.map((tech) => <span key={tech} className="cv-tag rounded px-3 py-1.5 text-sm">{tech}</span>)}</div>
+              </div>
+              <div className="mt-7 rounded-xl border border-[var(--cv-border)] bg-[var(--cv-surface-strong)] p-4">
+                <h4 className="flex items-center gap-2 font-bold text-[var(--cv-text)]"><Check size={17} className="text-[var(--cv-accent)]" /> Ce que tu peux explorer</h4>
+                <p className="mt-2 text-sm leading-6 text-[var(--cv-text-muted)]">Le dépôt public contient le code source et les choix techniques. Les liens de démonstration seront ajoutés lorsque le projet sera déployé.</p>
+              </div>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <a href={selectedProject.githubUrl} target="_blank" rel="noopener noreferrer" className="cv-button-primary inline-flex items-center gap-2 rounded-md px-4 py-2.5 font-semibold"><Github size={17} /> Voir le code <ExternalLink size={14} /></a>
+              </div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>

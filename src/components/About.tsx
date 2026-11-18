@@ -39,18 +39,17 @@ const About: React.FC<AboutProps> = ({ className = '' }) => {
           >
         <h2 className="text-3xl font-bold mb-6 section-title">À propos</h2>
             <p className="mb-4 leading-8 text-[var(--cv-text-muted)]">
-              Développeur fullstack spécialisé dans la conception et le développement de plateformes web et de
-              solutions numériques. Je m'intéresse particulièrement aux applications performantes, sécurisées,
-              maintenables et adaptées aux usages réels.
+              J’aime partir d’un besoin concret et le traduire en un outil simple à utiliser et fiable dans le temps.
+              Je travaille aussi bien sur l’interface que sur les services et les données qui la font fonctionner.
             </p>
             <p className="mb-4 leading-8 text-[var(--cv-text-muted)]">
-              Mon parcours m'a amené à travailler sur des plateformes de gestion des péages, du personnel, des
-              opérations internes, de la fiscalité, de la paie et de la gestion universitaire. J'interviens autant sur
-              l'interface que sur les API, les modèles de données, l'intégration de services et la maintenance.
+              Mon expérience couvre la gestion des péages, du personnel, des opérations internes, de la fiscalité,
+              de la paie et de la gestion universitaire. Ces domaines m’ont appris à écouter les utilisateurs et à
+              tenir compte des réalités du terrain.
             </p>
             <p className="leading-8 text-[var(--cv-text-muted)]">
-              Je suis rigoureux, autonome, habitué à collaborer avec des équipes métier et techniques, et attentif à
-              la qualité du code livré en production.
+              J’accorde de l’importance à la qualité du code, à la documentation et à une collaboration claire entre
+              équipes techniques et métier.
             </p>
           </div>
           <div className="grid gap-4">

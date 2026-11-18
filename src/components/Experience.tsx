@@ -1,7 +1,9 @@
 import { FC } from 'react';
 import { Experience as ExperienceType } from '../types';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const Experience: FC = () => {
+  const reduceMotion = useReducedMotion();
   const experiences: ExperienceType[] = [
     {
       company: 'HOMINTEC (CDD) – Bénin',
@@ -70,11 +72,15 @@ const Experience: FC = () => {
             évolutive et la traduction de besoins fonctionnels en solutions techniques fiables.
           </p>
         </div>
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="experience-track relative grid lg:grid-cols-2 gap-6">
           {experiences.map((exp, index) => (
-            <div 
+            <motion.article
               key={index} 
-              className="p-6 rounded-lg cv-card"
+              initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, delay: (index % 2) * 0.1 }}
+              className="experience-stop relative p-6 rounded-lg cv-card"
             >
               <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
                 <div>
@@ -96,7 +102,7 @@ const Experience: FC = () => {
                   <span key={tech} className="px-3 py-1 text-sm cv-tag rounded">{tech}</span>
                 ))}
               </div>
-            </div>
+            </motion.article>
           ))}
         </div>
       </div>
