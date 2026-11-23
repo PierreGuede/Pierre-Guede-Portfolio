@@ -1,7 +1,11 @@
-import { ArrowDown, ArrowRight, Download, Github, Mail, MapPin } from "lucide-react";
+import { ArrowDown, ArrowRight, Compass, Download, Github, MapPin } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
-const Hero = () => {
+interface HeroProps {
+  onExplore: () => void;
+}
+
+const Hero = ({ onExplore }: HeroProps) => {
   const reduceMotion = useReducedMotion();
   const reveal = (delay = 0) => ({
     initial: reduceMotion ? false : { opacity: 0, y: 18 },
@@ -36,11 +40,11 @@ const Hero = () => {
           </motion.div>
 
           <motion.div {...reveal(0.4)} className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#projects" className="cv-button-primary inline-flex items-center gap-2 rounded-md px-5 py-3 font-semibold transition-transform hover:-translate-y-0.5">
-              Découvrir mes projets <ArrowRight size={18} />
-            </a>
-            <a href="#contact" className="cv-button-outline inline-flex items-center gap-2 rounded-md px-5 py-3 font-semibold">
-              <Mail size={18} /> Me contacter
+            <button type="button" onClick={onExplore} data-open-explorer className="cv-button-primary inline-flex items-center gap-2 rounded-md px-5 py-3 font-semibold transition-transform hover:-translate-y-0.5">
+              <Compass size={18} /> Explorer mon univers <ArrowRight size={18} />
+            </button>
+            <a href="#projects" className="cv-button-outline inline-flex items-center gap-2 rounded-md px-5 py-3 font-semibold">
+              Parcours classique <ArrowDown size={16} />
             </a>
             <a href="/CV_PIERRE_MAURIL_MAFOYA_GUEDE.pdf" download className="inline-flex items-center gap-2 px-3 py-3 font-semibold text-[var(--cv-accent-strong)] transition-colors hover:text-[var(--cv-accent)]">
               <Download size={18} /> CV

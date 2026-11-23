@@ -9,13 +9,20 @@ import Contact from './components/Contact';
 import About from './components/About';
 import Education from './components/Education';
 import Footer from './components/Footer';
+import { useCallback, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import IslandExperience from './components/IslandExperience';
 
 const App: FC = () => {
+  const [isExplorerOpen, setIsExplorerOpen] = useState(false);
+  const openExplorer = useCallback(() => setIsExplorerOpen(true), []);
+  const closeExplorer = useCallback(() => setIsExplorerOpen(false), []);
+
   return (
     <div className="app-shell min-h-screen font-sans text-[var(--cv-text)]">
       <Navbar />
       <div className="content pt-16">
-        <Hero />
+        <Hero onExplore={openExplorer} />
         <About />
         <Skills />
         <Experience />
@@ -24,6 +31,7 @@ const App: FC = () => {
         <Contact />
       </div>
       <Footer />
+      <AnimatePresence>{isExplorerOpen && <IslandExperience onClose={closeExplorer} />}</AnimatePresence>
     </div>
   );
 };
