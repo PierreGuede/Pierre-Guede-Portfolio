@@ -21,7 +21,7 @@ const App: FC = () => {
   return (
     <div className="app-shell min-h-screen font-sans text-[var(--cv-text)]">
       <Navbar />
-      <div className="content pt-16">
+      <div className="content pt-[4.75rem]">
         <Hero onExplore={openExplorer} />
         <About />
         <Skills />
