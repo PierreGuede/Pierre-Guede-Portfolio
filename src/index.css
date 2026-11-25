@@ -1139,8 +1139,8 @@ a:hover .contact-arrow {
 }
 
 /* Centered name that condenses into the monogram on scroll */
-.portfolio-nav { height: 76px; background: rgba(255,253,247,.88); border-bottom: 1px solid rgba(215,227,223,.75); backdrop-filter: blur(16px); transition: background .3s ease, border-color .3s ease, box-shadow .3s ease; }
-.portfolio-nav.is-scrolled { background: rgba(255,253,247,.96); border-color: rgba(215,227,223,.9); box-shadow: 0 8px 28px rgba(20,55,67,.08); }
+.portfolio-nav { height: 76px; background: rgba(255,253,247,.64); border-bottom: 1px solid rgba(215,227,223,.22); border-radius: 0; backdrop-filter: blur(8px) saturate(1.08); -webkit-backdrop-filter: blur(8px) saturate(1.08); transition: top .4s ease, left .4s ease, right .4s ease, border-radius .4s ease, background .4s ease, border-color .4s ease, box-shadow .4s ease, backdrop-filter .4s ease; }
+.portfolio-nav.is-scrolled { top: 10px; left: clamp(12px, 3vw, 38px); right: clamp(12px, 3vw, 38px); border: 1px solid rgba(215,227,223,.58); border-radius: 1.35rem; background: rgba(255,253,247,.72); backdrop-filter: blur(24px) saturate(1.45); -webkit-backdrop-filter: blur(24px) saturate(1.45); box-shadow: 0 10px 32px rgba(20,55,67,.095), inset 0 1px 0 rgba(255,255,255,.82); }
 .navbar-inner { position: relative; display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; }
 .navbar-left { grid-column: 1; grid-row: 1; }
 .navbar-brand { position: relative; z-index: 2; grid-column: 2; grid-row: 1; display: inline-flex; min-height: 44px; align-items: center; justify-content: center; color: var(--cv-accent-strong); text-decoration: none; }
