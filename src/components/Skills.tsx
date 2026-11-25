@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { usePreferences } from '../preferences';
 import { Code2, Database, Layers3, Smartphone } from 'lucide-react';
 import {
   AngularJsIcon, LaravelIcon, NestJsIcon, NextJsIcon, ReactJsIcon, VueJsIcon,
@@ -57,6 +58,15 @@ const skillCategories = [
 const Skills: FC = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const reduceMotion = useReducedMotion();
+  const { locale } = usePreferences();
+  const english = locale === 'en';
+  const localizedCopy: Record<string, { title: string; kicker: string; summary: string }> = english ? {
+    frontend: { title: 'Frontend', kicker: 'Interfaces & experience', summary: 'Accessible, responsive interfaces designed for real business needs.' },
+    backend: { title: 'Backend', kicker: 'Services & APIs', summary: 'Structured, documented services connected to product needs.' },
+    outils: { title: 'Tools', kicker: 'Data, delivery & quality', summary: 'Tools that support development, documentation and delivery.' },
+    mobile: { title: 'Mobile', kicker: 'iOS & Android apps', summary: 'Native and cross-platform mobile apps, from prototype to app stores.' },
+  } : {};
+  const categories = skillCategories.map((category) => ({ ...category, ...(localizedCopy[category.id] ?? {}) }));
 
   useEffect(() => {
     const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-skill-panel]'));
@@ -89,16 +99,16 @@ const Skills: FC = () => {
     <section id="skills" className="py-20 px-4 scroll-mt-24">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12 max-w-3xl">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--cv-accent)]">Mon environnement de travail</p>
-          <h2 className="text-3xl font-bold section-title sm:text-4xl">Compétences</h2>
-          <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">Explore mes outils par domaine. Sur mobile, fais défiler les cartes horizontalement.</p>
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--cv-accent)]">{english ? 'My toolkit' : 'Mon environnement de travail'}</p>
+          <h2 className="text-3xl font-bold section-title sm:text-4xl">{english ? 'Skills' : 'Compétences'}</h2>
+          <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">{english ? 'Explore my tools by area. Swipe through the cards on mobile.' : 'Explore mes outils par domaine. Sur mobile, fais défiler les cartes horizontalement.'}</p>
         </div>
 
         <div className="skills-story">
-          <nav className="skills-story-nav" aria-label="Catégories de compétences">
-            <p className="skills-story-label">Explorer par domaine</p>
+          <nav className="skills-story-nav" aria-label={english ? 'Skill categories' : 'Catégories de compétences'}>
+            <p className="skills-story-label">{english ? 'Explore by area' : 'Explorer par domaine'}</p>
             <div className="skills-story-tabs">
-              {skillCategories.map((category, index) => (
+              {categories.map((category, index) => (
                 <button
                   key={category.id}
                   type="button"
@@ -117,9 +127,9 @@ const Skills: FC = () => {
           </nav>
 
           <div className="skills-story-main">
-            <div className="skills-story-progress" aria-hidden="true"><span style={{ height: `${((activeCategory + 1) / skillCategories.length) * 100}%` }} /></div>
+            <div className="skills-story-progress" aria-hidden="true"><span style={{ height: `${((activeCategory + 1) / categories.length) * 100}%` }} /></div>
             <div className="skills-story-panels">
-            {skillCategories.map((category, categoryIndex) => (
+            {categories.map((category, categoryIndex) => (
               <section
                 key={category.id}
                 id={`skills-${category.id}`}
@@ -152,7 +162,7 @@ const Skills: FC = () => {
                       </motion.div>
                     ))}
                   </div>
-                  <div className="skills-story-panel-footer"><span>0{categoryIndex + 1} / 0{skillCategories.length}</span><span>{String(category.skills.length).padStart(2, '0')} compétences</span></div>
+                  <div className="skills-story-panel-footer"><span>0{categoryIndex + 1} / 0{categories.length}</span><span>{String(category.skills.length).padStart(2, '0')} {english ? 'skills' : 'compétences'}</span></div>
                 </div>
               </section>
             ))}

@@ -1,16 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { MotionValue, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { Download, Menu, X } from 'lucide-react';
-
-const navItems = [
-  { path: 'home', label: 'Accueil' },
-  { path: 'about', label: 'À propos' },
-  { path: 'skills', label: 'Compétences' },
-  { path: 'experience', label: 'Expérience' },
-  { path: 'education', label: 'Formation' },
-  { path: 'projects', label: 'Projets' },
-  { path: 'contact', label: 'Contact' },
-];
+import { Download, Menu, Moon, Sun, X } from 'lucide-react';
+import { usePreferences } from '../preferences';
 
 interface ShrinkingWordProps {
   initial: string;
@@ -55,6 +46,14 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const reduceMotion = useReducedMotion() ?? false;
   const { scrollY } = useScroll();
+  const { locale, setLocale, theme, toggleTheme } = usePreferences();
+  const navItems = locale === 'fr' ? [
+    { path: 'home', label: 'Accueil' }, { path: 'about', label: 'À propos' }, { path: 'skills', label: 'Compétences' },
+    { path: 'experience', label: 'Expérience' }, { path: 'education', label: 'Formation' }, { path: 'projects', label: 'Projets' }, { path: 'contact', label: 'Contact' },
+  ] : [
+    { path: 'home', label: 'Home' }, { path: 'about', label: 'About' }, { path: 'skills', label: 'Skills' },
+    { path: 'experience', label: 'Experience' }, { path: 'education', label: 'Education' }, { path: 'projects', label: 'Projects' }, { path: 'contact', label: 'Contact' },
+  ];
 
   useEffect(() => {
     const updateScrollState = () => setIsScrolled(window.scrollY > 44);
@@ -66,7 +65,7 @@ const Navbar = () => {
   return (
     <nav
       className={`portfolio-nav fixed inset-x-0 top-0 z-50 ${isScrolled ? 'is-scrolled' : ''}`}
-      aria-label="Navigation principale"
+      aria-label={locale === 'fr' ? 'Navigation principale' : 'Main navigation'}
     >
       <div className="navbar-inner mx-auto h-full max-w-6xl px-4">
         <div className="navbar-left hidden items-center justify-center gap-4 xl:flex">
@@ -75,7 +74,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <a href="#home" aria-label="Pierre Mauril Guede, retour à l’accueil" className="navbar-brand" onClick={() => setIsOpen(false)}>
+        <a href="#home" aria-label={locale === 'fr' ? 'Pierre Mauril Guede, retour à l’accueil' : 'Pierre Mauril Guede, back to home'} className="navbar-brand" onClick={() => setIsOpen(false)}>
           <span className="navbar-brand-text" aria-hidden="true">
             <ShrinkingWord initial="P" suffix="ierre" start={8} end={72} scrollY={scrollY} reduceMotion={reduceMotion} isScrolled={isScrolled} />
             <ShrinkingGap scrollY={scrollY} reduceMotion={reduceMotion} isScrolled={isScrolled} />
@@ -92,13 +91,17 @@ const Navbar = () => {
           <a href="/CV_PIERRE_MAURIL_MAFOYA_GUEDE.pdf" download className="navbar-cv inline-flex items-center gap-1.5 rounded-md font-semibold">
             <Download size={14} /> CV
           </a>
+          <div className="navbar-utilities">
+            <button type="button" className="navbar-utility" onClick={() => setLocale(locale === 'fr' ? 'en' : 'fr')} aria-label={locale === 'fr' ? 'Switch to English' : 'Passer en français'}>{locale === 'fr' ? 'EN' : 'FR'}</button>
+            <button type="button" className="navbar-utility" onClick={toggleTheme} aria-label={theme === 'light' ? (locale === 'fr' ? 'Activer le thème sombre' : 'Switch to dark theme') : (locale === 'fr' ? 'Activer le thème clair' : 'Switch to light theme')}>{theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}</button>
+          </div>
         </div>
 
         <button
           type="button"
           onClick={() => setIsOpen((open) => !open)}
           className="navbar-menu-button inline-flex items-center justify-center rounded-lg p-2 text-[var(--cv-text)] transition-colors hover:bg-[var(--cv-surface-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--cv-accent)] xl:hidden"
-          aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-label={isOpen ? (locale === 'fr' ? 'Fermer le menu' : 'Close menu') : (locale === 'fr' ? 'Ouvrir le menu' : 'Open menu')}
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
         >
@@ -118,8 +121,14 @@ const Navbar = () => {
             </a>
           ))}
           <a href="/CV_PIERRE_MAURIL_MAFOYA_GUEDE.pdf" download className="cv-button-primary mt-3 inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-semibold" tabIndex={isOpen ? 0 : -1} onClick={() => setIsOpen(false)}>
-            <Download size={17} /> Télécharger mon CV
+            <Download size={17} /> {locale === 'fr' ? 'Télécharger mon CV' : 'Download my CV'}
           </a>
+          <div className="mobile-utilities" aria-label={locale === 'fr' ? 'Préférences' : 'Preferences'}>
+            <button type="button" className="navbar-utility" onClick={() => setLocale(locale === 'fr' ? 'en' : 'fr')} aria-label={locale === 'fr' ? 'Switch to English' : 'Passer en français'}>{locale === 'fr' ? 'English' : 'Français'}</button>
+            <button type="button" className="navbar-utility mobile-theme-button" onClick={toggleTheme} aria-label={theme === 'light' ? (locale === 'fr' ? 'Activer le thème sombre' : 'Switch to dark theme') : (locale === 'fr' ? 'Activer le thème clair' : 'Switch to light theme')}>
+              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}{theme === 'light' ? (locale === 'fr' ? 'Mode sombre' : 'Dark mode') : (locale === 'fr' ? 'Mode clair' : 'Light mode')}
+            </button>
+          </div>
         </div>
       </div>
     </nav>

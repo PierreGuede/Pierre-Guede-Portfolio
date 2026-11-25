@@ -1,10 +1,13 @@
 import { FC } from 'react';
 import { Experience as ExperienceType } from '../types';
 import { motion, useReducedMotion } from 'framer-motion';
+import { usePreferences } from '../preferences';
 
 const Experience: FC = () => {
   const reduceMotion = useReducedMotion();
-  const experiences: ExperienceType[] = [
+  const { locale } = usePreferences();
+  const english = locale === 'en';
+  const frenchExperiences: ExperienceType[] = [
     {
       company: 'HOMINTEC (CDD) – Bénin',
       role: 'Développeur Fullstack',
@@ -61,15 +64,42 @@ const Experience: FC = () => {
       stack: ['Laravel', 'PHP']
     }
   ];
+  const englishExperiences: ExperienceType[] = [
+    { company: 'HOMINTEC (fixed-term) – Benin', role: 'Full-stack developer', period: 'November 2024 – July 2026', bullets: [
+      'Designed, developed and maintained business platforms for tolls, HR and internal operations.',
+      'Contributed to Gate-24: vehicle passages, transactions and toll booth operations.',
+      'Built Angular frontends and NestJS services, REST APIs, payments, terminals, queues, ticket booking and notifications.',
+      'Designed PostgreSQL databases, used Docker and supported the HOMINTEC-Gabon team.',
+    ], stack: ['Angular', 'NestJS', 'PostgreSQL', 'Docker', 'REST API', 'POS'] },
+    { company: 'MTECH (fixed-term) – Benin', role: 'Full-stack developer', period: 'November 2023 – March 2024', bullets: [
+      'Designed and developed full-stack web applications.',
+      'Built frontend and backend features, integrated services and consumed REST APIs.',
+      'Contributed to data model design and evolution.',
+    ], stack: ['React', 'Next.js', 'Node.js', 'MySQL', 'REST API'] },
+    { company: 'EDEAL – Benin', role: 'Backend developer', period: 'August 2023 – November 2023', bullets: [
+      'Developed backend features and customized business management solutions.',
+      'Worked on accounting and payroll modules.',
+      'Adapted features to specific user needs.',
+    ], stack: ['Laravel', 'PHP', 'Sage 100', 'Business software'] },
+    { company: 'Consulting Engineering Team (TEC-Sarl) – Benin', role: 'Full-stack developer', period: 'April 2022 – January 2023', bullets: [
+      'Contributed to university management and tax software.',
+      'Implemented and evolved product features in a web environment.',
+      'Worked across frontend and backend development.',
+    ], stack: ['Laravel', 'VueJS', 'MySQL'] },
+    { company: 'ATS-Afrique – Benin', role: 'Full-stack developer intern', period: 'September 2021 – October 2021', bullets: [
+      'First professional experience with Laravel.',
+      'Contributed to projects for partner companies.',
+    ], stack: ['Laravel', 'PHP'] },
+  ];
+  const experiences = english ? englishExperiences : frenchExperiences;
 
   return (
     <section id="experience" className="py-20 px-4 scroll-mt-24">
       <div className="max-w-6xl mx-auto">
         <div className="max-w-3xl mb-12">
-          <h2 className="text-3xl font-bold section-title">Parcours professionnel</h2>
+          <h2 className="text-3xl font-bold section-title">{english ? 'Professional experience' : 'Parcours professionnel'}</h2>
           <p className="mt-4 text-[var(--cv-text-muted)] leading-7">
-            Des missions centrées sur la livraison d'applications métier, l'intégration de services, la maintenance
-            évolutive et la traduction de besoins fonctionnels en solutions techniques fiables.
+            {english ? 'Roles focused on delivering business applications, integrating services, maintaining products and turning functional needs into dependable technical solutions.' : "Des missions centrées sur la livraison d'applications métier, l'intégration de services, la maintenance évolutive et la traduction de besoins fonctionnels en solutions techniques fiables."}
           </p>
         </div>
         <div className="experience-track relative grid lg:grid-cols-2 gap-6">
@@ -99,7 +129,7 @@ const Experience: FC = () => {
               </ul>
               {(exp.bullets?.length ?? 0) > 2 && (
                 <details className="experience-more">
-                  <summary>Voir les autres missions</summary>
+                  <summary>{english ? 'Show more responsibilities' : 'Voir les autres missions'}</summary>
                   <ul className="mt-3 space-y-3 text-[var(--cv-text-muted)]">
                     {exp.bullets?.slice(2).map((item) => <li key={item}>{item}</li>)}
                   </ul>

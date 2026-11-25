@@ -1,15 +1,26 @@
 import { FC } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, GraduationCap, Languages } from 'lucide-react';
+import { usePreferences } from '../preferences';
 
 const Education: FC = () => {
   const reduceMotion = useReducedMotion();
-  const items = [
+  const { locale } = usePreferences();
+  const english = locale === 'en';
+  const items = english ? [
+    { title: 'National Bachelor’s Degree in Computer Systems and Software', focus: 'Computer systems & software', year: '2023', school: '' },
+    { title: 'Professional Bachelor’s · Software Architecture', focus: 'Software architecture', year: '2022', school: 'ESGIS · Cotonou' },
+    { title: 'Science and Technology Baccalaureate · Series D', focus: 'Science & technology', year: '2019', school: 'CS Sainte Félicité · Cotonou' },
+  ] : [
     { title: 'Licence Nationale en Système Informatique et Logiciel', focus: 'Systèmes informatiques & logiciels', year: '2023', school: '' },
     { title: 'Licence Professionnelle · Architecture des Logiciels', focus: 'Architecture des logiciels', year: '2022', school: 'ESGIS · Cotonou' },
     { title: 'Baccalauréat Science et Technique · Série D', focus: 'Sciences & techniques', year: '2019', school: 'CS Sainte Félicité · Cotonou' },
   ];
-  const languages = [
+  const languages = english ? [
+    { name: 'French', level: 'Native', code: 'FR' },
+    { name: 'English', level: 'Intermediate', code: 'EN' },
+    { name: 'German', level: 'Beginner', code: 'DE' },
+  ] : [
     { name: 'Français', level: 'Langue maternelle', code: 'FR' },
     { name: 'Anglais', level: 'Intermédiaire', code: 'EN' },
     { name: 'Allemand', level: 'Débutant', code: 'DE' },
@@ -19,9 +30,9 @@ const Education: FC = () => {
     <section id="education" className="py-20 px-4 scroll-mt-24">
       <div className="max-w-6xl mx-auto">
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--cv-accent)]">Les bases & les échanges</p>
-          <h2 className="text-3xl font-bold section-title sm:text-4xl">Formation & langues</h2>
-          <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">Une formation informatique, et des langues pour collaborer avec des équipes et des utilisateurs variés.</p>
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--cv-accent)]">{english ? 'Learning & communication' : 'Les bases & les échanges'}</p>
+          <h2 className="text-3xl font-bold section-title sm:text-4xl">{english ? 'Education & languages' : 'Formation & langues'}</h2>
+          <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">{english ? 'A background in computing and languages that help me collaborate with diverse teams and users.' : 'Une formation informatique, et des langues pour collaborer avec des équipes et des utilisateurs variés.'}</p>
         </div>
 
         <div className="education-pair grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
@@ -36,7 +47,7 @@ const Education: FC = () => {
             <div className="education-panel-wash" aria-hidden="true" />
             <div className="relative">
               <div className="mb-7 flex items-start justify-between gap-4">
-                <div><span className="education-icon"><GraduationCap size={21} /></span><p className="mt-4 text-xs font-bold uppercase tracking-[0.17em] text-[var(--cv-accent)]">Mon parcours</p><h3 className="mt-1 text-2xl font-black text-[var(--cv-text)]">Formation</h3></div>
+                <div><span className="education-icon"><GraduationCap size={21} /></span><p className="mt-4 text-xs font-bold uppercase tracking-[0.17em] text-[var(--cv-accent)]">{english ? 'My background' : 'Mon parcours'}</p><h3 className="mt-1 text-2xl font-black text-[var(--cv-text)]">{english ? 'Education' : 'Formation'}</h3></div>
                 <span className="education-watermark font-serif text-6xl font-bold text-[var(--cv-border)]">01</span>
               </div>
               <ol className="education-list">
@@ -65,7 +76,7 @@ const Education: FC = () => {
             <div className="education-panel-wash" aria-hidden="true" />
             <div className="relative">
               <div className="mb-7 flex items-start justify-between gap-4">
-                <div><span className="education-icon education-icon-warm"><Languages size={20} /></span><p className="mt-4 text-xs font-bold uppercase tracking-[0.17em] text-[var(--cv-accent-warm)]">Pour collaborer</p><h3 className="mt-1 text-2xl font-black text-[var(--cv-text)]">Langues</h3></div>
+                <div><span className="education-icon education-icon-warm"><Languages size={20} /></span><p className="mt-4 text-xs font-bold uppercase tracking-[0.17em] text-[var(--cv-accent-warm)]">{english ? 'For collaboration' : 'Pour collaborer'}</p><h3 className="mt-1 text-2xl font-black text-[var(--cv-text)]">{english ? 'Languages' : 'Langues'}</h3></div>
                 <span className="education-watermark font-serif text-6xl font-bold text-[var(--cv-border)]">02</span>
               </div>
               <div className="language-list space-y-3">
@@ -77,7 +88,7 @@ const Education: FC = () => {
                   </motion.div>
                 ))}
               </div>
-              <p className="mt-6 text-xs leading-5 text-[var(--cv-text-muted)]">Les niveaux indiqués reflètent mon niveau actuel.</p>
+              <p className="mt-6 text-xs leading-5 text-[var(--cv-text-muted)]">{english ? 'The levels shown reflect my current proficiency.' : 'Les niveaux indiqués reflètent mon niveau actuel.'}</p>
             </div>
           </motion.article>
         </div>

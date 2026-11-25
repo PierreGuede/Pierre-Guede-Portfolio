@@ -4,6 +4,7 @@ import {
   ArrowLeft, ArrowUpRight, Boxes, BriefcaseBusiness, Github, MapPin, MessageCircle,
   Compass, X,
 } from 'lucide-react';
+import { usePreferences } from '../preferences';
 
 type IslandStop = {
   id: 'projects' | 'experience' | 'skills' | 'contact';
@@ -51,7 +52,26 @@ const IslandExperience: FC<IslandExperienceProps> = ({ onClose }) => {
   const [selectedStop, setSelectedStop] = useState<IslandStop['id'] | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
-  const selected = stops.find((stop) => stop.id === selectedStop) ?? null;
+  const { locale } = usePreferences();
+  const english = locale === 'en';
+  const localizedStops = english ? stops.map((stop) => ({
+    ...stop,
+    label: ({ projects: 'Projects', experience: 'Experience', skills: 'Skills', contact: 'Contact' } as const)[stop.id],
+    subtitle: ({ projects: 'Project harbor', experience: 'Team district', skills: 'Tool forest', contact: 'Lighthouse of ideas' } as const)[stop.id],
+  })) : stops;
+  const localizedProjects = english ? projects.map((project, index) => ({ ...project, text: [
+    'Backend for managing queues, appointments and priorities.',
+    'Tax management app with a Livewire interface and exports.',
+    'Delivery REST API designed around operations in Chad.',
+  ][index] })) : projects;
+  const localizedExperience = english ? experience.map(([company, , period]) => [company, company === 'ATS-Afrique' ? 'Full-stack developer intern' : company === 'EDEAL' ? 'Backend developer' : 'Full-stack developer', period]) : experience;
+  const localizedSkillGroups = english ? [
+    ['Frontend', 'Angular · Vue.js · React · Next.js · Tailwind CSS'],
+    ['Backend & APIs', 'Spring Boot · NestJS · Node.js · Laravel · REST · GraphQL'],
+    ['Mobile', 'Flutter · React Native · Kotlin · Swift · Skip'],
+    ['Data & tools', 'PostgreSQL · MySQL · Docker · Git · Swagger · Postman'],
+  ] : skillGroups;
+  const selected = localizedStops.find((stop) => stop.id === selectedStop) ?? null;
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -104,25 +124,25 @@ const IslandExperience: FC<IslandExperienceProps> = ({ onClose }) => {
               <span className="island-brand-mark" aria-hidden="true">PG</span>
               <div><p className="text-sm font-black tracking-wide text-[var(--cv-text)]">PIERRE GUEDE</p><p className="text-[10px] font-semibold uppercase tracking-[.16em] text-[var(--cv-text-muted)]">Mode exploration</p></div>
             </div>
-            <div className="island-header-route hidden items-center gap-2 font-mono text-[10px] uppercase tracking-[.15em] text-[var(--cv-text-muted)] sm:flex"><span className="island-route-dot" /> Archipel du parcours <span className="opacity-40">/</span> Bénin</div>
-            <button ref={closeButtonRef} type="button" onClick={onClose} className="island-exit inline-flex items-center gap-2 rounded-full border border-[var(--cv-border)] bg-[var(--cv-surface)] px-3.5 py-2 text-sm font-semibold text-[var(--cv-text)] transition-all hover:-translate-y-0.5 hover:border-[var(--cv-accent)]" aria-label="Fermer le mode exploration et revenir au portfolio">
-              <ArrowLeft size={16} /><span className="hidden sm:inline">Retour au portfolio</span><span className="sm:hidden">Retour</span><X className="sm:hidden" size={15} />
+            <div className="island-header-route hidden items-center gap-2 font-mono text-[10px] uppercase tracking-[.15em] text-[var(--cv-text-muted)] sm:flex"><span className="island-route-dot" /> {english ? 'Portfolio archipelago' : 'Archipel du parcours'} <span className="opacity-40">/</span> {english ? 'Benin' : 'Bénin'}</div>
+            <button ref={closeButtonRef} type="button" onClick={onClose} className="island-exit inline-flex items-center gap-2 rounded-full border border-[var(--cv-border)] bg-[var(--cv-surface)] px-3.5 py-2 text-sm font-semibold text-[var(--cv-text)] transition-all hover:-translate-y-0.5 hover:border-[var(--cv-accent)]" aria-label={english ? 'Close exploration and return to the portfolio' : 'Fermer le mode exploration et revenir au portfolio'}>
+              <ArrowLeft size={16} /><span className="hidden sm:inline">{english ? 'Back to portfolio' : 'Retour au portfolio'}</span><span className="sm:hidden">{english ? 'Back' : 'Retour'}</span><X className="sm:hidden" size={15} />
             </button>
           </div>
         </header>
 
         <main className="island-main mx-auto grid max-w-[1480px] gap-5 px-3 py-4 sm:gap-7 sm:px-7 sm:py-7 lg:grid-cols-[minmax(0,1.25fr)_minmax(340px,.75fr)] lg:items-center">
-          <section className="island-map-column" aria-label="Carte interactive du parcours">
+          <section className="island-map-column" aria-label={english ? 'Interactive portfolio map' : 'Carte interactive du parcours'}>
             <div className="island-map-heading mb-3 flex items-end justify-between gap-3 px-1 sm:mb-4">
-              <div><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[var(--cv-accent)]">Choisis une destination</p><h1 id="island-title" className="mt-1 text-2xl font-black text-[var(--cv-text)] sm:text-3xl">Explore mon univers</h1></div>
-              <span className="hidden font-mono text-[10px] uppercase tracking-[.13em] text-[var(--cv-text-muted)] sm:block">4 lieux · 1 parcours</span>
+              <div><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[var(--cv-accent)]">{english ? 'Choose a destination' : 'Choisis une destination'}</p><h1 id="island-title" className="mt-1 text-2xl font-black text-[var(--cv-text)] sm:text-3xl">{english ? 'Explore my world' : 'Explore mon univers'}</h1></div>
+              <span className="hidden font-mono text-[10px] uppercase tracking-[.13em] text-[var(--cv-text-muted)] sm:block">{english ? '4 places · 1 journey' : '4 lieux · 1 parcours'}</span>
             </div>
 
-            <div className="island-map" role="group" aria-label="Sélectionne une zone sur la carte ou utilise les boutons ci-dessous">
+            <div className="island-map" role="group" aria-label={english ? 'Choose an area on the map or use the buttons below' : 'Sélectionne une zone sur la carte ou utilise les boutons ci-dessous'}>
               <div className="island-map-glow" aria-hidden="true" />
               <svg className="island-map-art" viewBox="0 0 800 620" role="img" aria-labelledby="map-title map-description" preserveAspectRatio="xMidYMid meet">
-                <title id="map-title">Carte illustrée de l’archipel du parcours</title>
-                <desc id="map-description">Une île paisible avec quatre destinations : les projets au nord, l’expérience à l’est, les compétences à l’ouest et le contact au sud.</desc>
+                  <title id="map-title">{english ? 'Illustrated map of my portfolio archipelago' : 'Carte illustrée de l’archipel du parcours'}</title>
+                  <desc id="map-description">{english ? 'A calm island with four destinations: projects to the north, experience to the east, skills to the west and contact to the south.' : 'Une île paisible avec quatre destinations : les projets au nord, l’expérience à l’est, les compétences à l’ouest et le contact au sud.'}</desc>
                 <defs>
                   <linearGradient id="island-land" x1=".1" y1="0" x2=".9" y2="1"><stop offset="0" stopColor="#e4eee3" /><stop offset=".53" stopColor="#d5e6d9" /><stop offset="1" stopColor="#c5ddd2" /></linearGradient>
                   <linearGradient id="island-shore" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#e9d8b3" /><stop offset="1" stopColor="#e0c995" /></linearGradient>
@@ -149,7 +169,7 @@ const IslandExperience: FC<IslandExperienceProps> = ({ onClose }) => {
                 <path d="M398 314v-14l9 7-9 7Z" fill="#0f8b8d" />
               </svg>
 
-              {stops.map((stop, index) => {
+              {localizedStops.map((stop, index) => {
                 const Icon = stop.icon;
                 const isSelected = selectedStop === stop.id;
                 return (
@@ -176,7 +196,7 @@ const IslandExperience: FC<IslandExperienceProps> = ({ onClose }) => {
               <div className="island-map-compass" aria-hidden="true"><span>N</span><Compass size={17} /></div>
               <div className="island-map-scale" aria-hidden="true"><span /> <small>MON PARCOURS</small></div>
             </div>
-            <div className="island-mobile-hint flex items-center justify-center gap-2 pt-3 text-[11px] text-[var(--cv-text-muted)]"><MapPin size={13} className="text-[var(--cv-accent)]" /> Sélectionne une destination pour voir le détail</div>
+            <div className="island-mobile-hint flex items-center justify-center gap-2 pt-3 text-[11px] text-[var(--cv-text-muted)]"><MapPin size={13} className="text-[var(--cv-accent)]" /> {english ? 'Choose a destination to see details' : 'Sélectionne une destination pour voir le détail'}</div>
           </section>
 
           <aside className="island-details" aria-live="polite" aria-atomic="false">
@@ -192,32 +212,32 @@ const IslandExperience: FC<IslandExperienceProps> = ({ onClose }) => {
                   aria-labelledby="island-info-title"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <div><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[var(--cv-accent)]">Destination · 0{stops.findIndex((stop) => stop.id === selected.id) + 1}</p><h2 id="island-info-title" className="mt-2 text-3xl font-black text-[var(--cv-text)]">{selected.label}</h2><p className="mt-1 text-sm text-[var(--cv-text-muted)]">{selected.subtitle}</p></div>
+                    <div><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[var(--cv-accent)]">{english ? 'Destination' : 'Destination'} · 0{localizedStops.findIndex((stop) => stop.id === selected.id) + 1}</p><h2 id="island-info-title" className="mt-2 text-3xl font-black text-[var(--cv-text)]">{selected.label}</h2><p className="mt-1 text-sm text-[var(--cv-text-muted)]">{selected.subtitle}</p></div>
                     <span className="island-info-icon"><selected.icon size={21} /></span>
                   </div>
                   <div className="island-info-content mt-6">
-                    {selected.id === 'projects' && <div className="space-y-3">{projects.map((project, index) => <article key={project.name} className="island-project-item"><div className="flex items-center gap-2"><span className="island-index">0{index + 1}</span><h3 className="font-bold text-[var(--cv-text)]">{project.name}</h3></div><p className="mt-1.5 text-sm leading-5 text-[var(--cv-text-muted)]">{project.text}</p><p className="mt-2 font-mono text-[10px] leading-4 text-[var(--cv-accent-strong)]">{project.stack}</p><a href={project.url} target="_blank" rel="noreferrer" className="island-content-link mt-2">Explorer le code <ArrowUpRight size={14} /></a></article>)}</div>}
-                    {selected.id === 'experience' && <div className="island-career-list">{experience.map(([company, role, period], index) => <article key={company} className="island-career-item"><span className="island-career-node">{index === 0 ? <span /> : String(index + 1).padStart(2, '0')}</span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-baseline justify-between gap-x-3"><h3 className="font-bold text-[var(--cv-text)]">{company}</h3><span className="font-mono text-[10px] text-[var(--cv-accent)]">{period}</span></div><p className="mt-0.5 text-sm text-[var(--cv-text-muted)]">{role}</p></div></article>)}</div>}
-                    {selected.id === 'skills' && <div className="space-y-4">{skillGroups.map(([title, stack], index) => <article key={title} className="island-skill-group"><div className="flex items-center gap-2"><span className="island-index">0{index + 1}</span><h3 className="font-bold text-[var(--cv-text)]">{title}</h3></div><p className="mt-2 pl-9 text-sm leading-6 text-[var(--cv-text-muted)]">{stack}</p></article>)}</div>}
-                    {selected.id === 'contact' && <div className="space-y-3"><p className="text-sm leading-6 text-[var(--cv-text-muted)]">Une opportunité, une mission ou une idée ? Je serai heureux d’en discuter.</p><a className="island-contact-link" href="mailto:pierremauril01@gmail.com"><span className="island-contact-icon"><MessageCircle size={17} /></span><span><small>E-mail</small><strong>pierremauril01@gmail.com</strong></span><ArrowUpRight size={17} /></a><a className="island-contact-link" href="tel:+2290156115410"><span className="island-contact-icon"><MessageCircle size={17} /></span><span><small>Téléphone</small><strong>+229 01 56 11 54 10</strong></span><ArrowUpRight size={17} /></a><a className="island-contact-link" href="https://github.com/PierreGuede" target="_blank" rel="noreferrer"><span className="island-contact-icon"><Github size={17} /></span><span><small>Code & projets</small><strong>github.com/PierreGuede</strong></span><ArrowUpRight size={17} /></a><p className="flex items-center gap-2 pt-1 text-xs text-[var(--cv-text-muted)]"><MapPin size={14} className="text-[var(--cv-accent)]" /> Abomey-Calavi, Bénin</p></div>}
+                    {selected.id === 'projects' && <div className="space-y-3">{localizedProjects.map((project, index) => <article key={project.name} className="island-project-item"><div className="flex items-center gap-2"><span className="island-index">0{index + 1}</span><h3 className="font-bold text-[var(--cv-text)]">{project.name}</h3></div><p className="mt-1.5 text-sm leading-5 text-[var(--cv-text-muted)]">{project.text}</p><p className="mt-2 font-mono text-[10px] leading-4 text-[var(--cv-accent-strong)]">{project.stack}</p><a href={project.url} target="_blank" rel="noreferrer" className="island-content-link mt-2">{english ? 'View code' : 'Explorer le code'} <ArrowUpRight size={14} /></a></article>)}</div>}
+                    {selected.id === 'experience' && <div className="island-career-list">{localizedExperience.map(([company, role, period], index) => <article key={company} className="island-career-item"><span className="island-career-node">{index === 0 ? <span /> : String(index + 1).padStart(2, '0')}</span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-baseline justify-between gap-x-3"><h3 className="font-bold text-[var(--cv-text)]">{company}</h3><span className="font-mono text-[10px] text-[var(--cv-accent)]">{period}</span></div><p className="mt-0.5 text-sm text-[var(--cv-text-muted)]">{role}</p></div></article>)}</div>}
+                    {selected.id === 'skills' && <div className="space-y-4">{localizedSkillGroups.map(([title, stack], index) => <article key={title} className="island-skill-group"><div className="flex items-center gap-2"><span className="island-index">0{index + 1}</span><h3 className="font-bold text-[var(--cv-text)]">{title}</h3></div><p className="mt-2 pl-9 text-sm leading-6 text-[var(--cv-text-muted)]">{stack}</p></article>)}</div>}
+                    {selected.id === 'contact' && <div className="space-y-3"><p className="text-sm leading-6 text-[var(--cv-text-muted)]">{english ? 'An opportunity, an assignment or an idea? I’d be happy to talk.' : 'Une opportunité, une mission ou une idée ? Je serai heureux d’en discuter.'}</p><a className="island-contact-link" href="mailto:pierremauril01@gmail.com"><span className="island-contact-icon"><MessageCircle size={17} /></span><span><small>E-mail</small><strong>pierremauril01@gmail.com</strong></span><ArrowUpRight size={17} /></a><a className="island-contact-link" href="tel:+2290156115410"><span className="island-contact-icon"><MessageCircle size={17} /></span><span><small>{english ? 'Phone' : 'Téléphone'}</small><strong>+229 01 56 11 54 10</strong></span><ArrowUpRight size={17} /></a><a className="island-contact-link" href="https://github.com/PierreGuede" target="_blank" rel="noreferrer"><span className="island-contact-icon"><Github size={17} /></span><span><small>{english ? 'Code & projects' : 'Code & projets'}</small><strong>github.com/PierreGuede</strong></span><ArrowUpRight size={17} /></a><p className="flex items-center gap-2 pt-1 text-xs text-[var(--cv-text-muted)]"><MapPin size={14} className="text-[var(--cv-accent)]" /> Abomey-Calavi, {english ? 'Benin' : 'Bénin'}</p></div>}
                   </div>
                   <div className="island-info-footer mt-6 flex items-center justify-between border-t border-[var(--cv-border)] pt-4"><span>ARCHIPEL DU PARCOURS</span><span>PG · 2026</span></div>
                 </motion.section>
               ) : (
-                <motion.section key="welcome" className="island-welcome cv-card rounded-[1.5rem] p-6 sm:p-8" initial={reduceMotion ? false : { opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} aria-label="Instructions d’exploration">
+                <motion.section key="welcome" className="island-welcome cv-card rounded-[1.5rem] p-6 sm:p-8" initial={reduceMotion ? false : { opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} aria-label={english ? 'Exploration instructions' : 'Instructions d’exploration'}>
                   <span className="island-welcome-icon"><Compass size={23} /></span>
-                  <p className="mt-6 text-[10px] font-bold uppercase tracking-[.2em] text-[var(--cv-accent)]">Bienvenue à bord</p>
-                  <h2 className="mt-2 text-3xl font-black leading-tight text-[var(--cv-text)]">Mon parcours, à découvrir autrement.</h2>
-                  <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">Chaque lieu raconte une partie de mon travail. Choisis un repère sur la carte pour ouvrir ses détails et parcourir le contenu à ton rythme.</p>
-                  <div className="island-welcome-route mt-7">{stops.map((stop, index) => <div key={stop.id} className="island-welcome-route-stop"><span>{String(index + 1).padStart(2, '0')}</span><span>{stop.label}</span></div>)}</div>
-                  <p className="mt-6 text-xs text-[var(--cv-text-muted)]">Navigation au clavier : utilise Tab pour passer d’un lieu à l’autre, puis Entrée pour le sélectionner.</p>
+                  <p className="mt-6 text-[10px] font-bold uppercase tracking-[.2em] text-[var(--cv-accent)]">{english ? 'Welcome aboard' : 'Bienvenue à bord'}</p>
+                  <h2 className="mt-2 text-3xl font-black leading-tight text-[var(--cv-text)]">{english ? 'Discover my journey in a different way.' : 'Mon parcours, à découvrir autrement.'}</h2>
+                  <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">{english ? 'Each place tells part of my story. Choose a marker on the map to open its details and explore at your own pace.' : 'Chaque lieu raconte une partie de mon travail. Choisis un repère sur la carte pour ouvrir ses détails et parcourir le contenu à ton rythme.'}</p>
+                  <div className="island-welcome-route mt-7">{localizedStops.map((stop, index) => <div key={stop.id} className="island-welcome-route-stop"><span>{String(index + 1).padStart(2, '0')}</span><span>{stop.label}</span></div>)}</div>
+                  <p className="mt-6 text-xs text-[var(--cv-text-muted)]">{english ? 'Keyboard navigation: press Tab to move between locations, then Enter to select one.' : 'Navigation au clavier : utilise Tab pour passer d’un lieu à l’autre, puis Entrée pour le sélectionner.'}</p>
                 </motion.section>
               )}
             </AnimatePresence>
           </aside>
         </main>
 
-        <footer className="island-bottom mx-auto flex max-w-[1480px] items-center justify-between gap-4 px-4 pb-5 pt-1 text-[10px] text-[var(--cv-text-muted)] sm:px-7"><span>PIERRE MAURIL MAFOYA GUEDE</span><span>Une exploration interactive · Bénin</span></footer>
+        <footer className="island-bottom mx-auto flex max-w-[1480px] items-center justify-between gap-4 px-4 pb-5 pt-1 text-[10px] text-[var(--cv-text-muted)] sm:px-7"><span>PIERRE MAURIL MAFOYA GUEDE</span><span>{english ? 'Interactive exploration · Benin' : 'Une exploration interactive · Bénin'}</span></footer>
       </div>
     </motion.div>
   );
