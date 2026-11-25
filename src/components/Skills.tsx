@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Code2, Database, Layers3 } from 'lucide-react';
+import { Code2, Database, Layers3, Smartphone } from 'lucide-react';
 import {
   AngularJsIcon, LaravelIcon, NestJsIcon, NextJsIcon, ReactJsIcon, VueJsIcon,
   GitIcon, VsCodeIcon, SqlIcon, PostgresIcon, WordPressIcon, NodeJsIcon,
   HtmlIcon, CssIcon, TailwindIcon, PhpIcon, ApiRestIcon, GraphQlIcon,
   DockerIcon, SwaggerIcon, PostmanIcon, GitHubIcon, SpirngBootIcon,
+  FlutterIcon, KotlinIcon, SwiftIcon, ReactNativeIcon, SkipIcon,
 } from './SkillsIcon';
 
 const skillCategories = [
@@ -40,6 +41,17 @@ const skillCategories = [
       { name: 'WordPress', icon: <WordPressIcon /> },
     ],
   },
+  {
+    id: 'mobile', title: 'Mobile', kicker: 'Applications iOS & Android', icon: <Smartphone size={18} />,
+    summary: 'Des applications mobiles natives et cross-platform, du prototype jusqu\'aux stores.',
+    skills: [
+      { name: 'Flutter', icon: <FlutterIcon /> },
+      { name: 'React Native', icon: <ReactNativeIcon /> },
+      { name: 'Kotlin', icon: <KotlinIcon /> },
+      { name: 'Swift', icon: <SwiftIcon /> },
+      { name: 'Skip', icon: <SkipIcon /> },
+    ],
+  },
 ];
 
 const Skills: FC = () => {
@@ -64,8 +76,12 @@ const Skills: FC = () => {
   }, []);
 
   const scrollToCategory = (index: number) => {
-    document.getElementById(`skills-${skillCategories[index].id}`)?.scrollIntoView({
-      behavior: reduceMotion ? 'auto' : 'smooth', block: 'start',
+    const panel = document.getElementById(`skills-${skillCategories[index].id}`);
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    panel?.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: isMobile ? 'nearest' : 'start',
+      inline: isMobile ? 'start' : 'nearest',
     });
   };
 
@@ -75,7 +91,7 @@ const Skills: FC = () => {
         <div className="mb-12 max-w-3xl">
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--cv-accent)]">Mon environnement de travail</p>
           <h2 className="text-3xl font-bold section-title sm:text-4xl">Compétences</h2>
-          <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">Parcours mes outils au fil du scroll. Les repères à gauche suivent automatiquement la catégorie affichée.</p>
+          <p className="mt-4 leading-7 text-[var(--cv-text-muted)]">Explore mes outils par domaine. Sur mobile, fais défiler les cartes horizontalement.</p>
         </div>
 
         <div className="skills-story">

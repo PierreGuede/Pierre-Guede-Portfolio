@@ -97,6 +97,14 @@ const Experience: FC = () => {
                   </li>
                 ))}
               </ul>
+              {(exp.bullets?.length ?? 0) > 2 && (
+                <details className="experience-more">
+                  <summary>Voir les autres missions</summary>
+                  <ul className="mt-3 space-y-3 text-[var(--cv-text-muted)]">
+                    {exp.bullets?.slice(2).map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                </details>
+              )}
               <div className="mt-5 flex flex-wrap gap-2">
                 {exp.stack?.map((tech) => (
                   <span key={tech} className="px-3 py-1 text-sm cv-tag rounded">{tech}</span>

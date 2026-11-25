@@ -27,7 +27,7 @@ const Contact: FC = () => {
             <span className="contact-eyebrow inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.15em]"><span className="contact-status-dot" /> Échangeons</span>
             <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-[var(--cv-accent)]">Une idée, une équipe, un défi</p>
             <h2 className="mt-2 max-w-lg text-4xl font-black leading-[1.08] text-[var(--cv-text)] sm:text-5xl">Construisons quelque chose d’utile.</h2>
-            <p className="mt-5 max-w-lg leading-7 text-[var(--cv-text-muted)]">Disponible pour discuter d’une opportunité fullstack, d’une mission web métier ou d’un projet numérique.</p>
+            <p className="mt-5 max-w-lg leading-7 text-[var(--cv-text-muted)]">Disponible pour discuter d’une opportunité fullstack, d’une mission web ou mobile métier ou d’un projet numérique.</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <a href="mailto:pierremauril01@gmail.com" className="cv-button-primary inline-flex items-center gap-2 rounded-lg px-5 py-3 font-semibold"><Mail size={18} /> M’écrire <ArrowUpRight size={16} /></a>
               <a href="/CV_PIERRE_MAURIL_MAFOYA_GUEDE.pdf" download className="cv-button-outline inline-flex items-center gap-2 rounded-lg px-5 py-3 font-semibold"><Download size={17} /> Télécharger mon CV</a>

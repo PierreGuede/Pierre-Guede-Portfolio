@@ -39,6 +39,7 @@ const experience = [
 const skillGroups = [
   ['Frontend', 'Angular · Vue.js · React · Next.js · Tailwind CSS'],
   ['Backend & API', 'Spring Boot · NestJS · Node.js · Laravel · REST · GraphQL'],
+  ['Mobile', 'Flutter · React Native · Kotlin · Swift · Skip'],
   ['Données & outils', 'PostgreSQL · MySQL · Docker · Git · Swagger · Postman'],
 ];
 

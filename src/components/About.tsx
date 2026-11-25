@@ -40,7 +40,7 @@ const About: React.FC<AboutProps> = ({ className = '' }) => {
         <h2 className="text-3xl font-bold mb-6 section-title">À propos</h2>
             <p className="mb-4 leading-8 text-[var(--cv-text-muted)]">
               J’aime partir d’un besoin concret et le traduire en un outil simple à utiliser et fiable dans le temps.
-              Je travaille aussi bien sur l’interface que sur les services et les données qui la font fonctionner.
+              Je travaille aussi bien sur les interfaces web et mobiles que sur les services et les données qui les font fonctionner.
             </p>
             <p className="mb-4 leading-8 text-[var(--cv-text-muted)]">
               Mon expérience couvre la gestion des péages, du personnel, des opérations internes, de la fiscalité,
@@ -52,7 +52,7 @@ const About: React.FC<AboutProps> = ({ className = '' }) => {
               équipes techniques et métier.
             </p>
           </div>
-          <div className="grid gap-4">
+          <div className="about-highlights grid gap-4">
             {[
               ["Applications métier", "Péages, personnel, opérations internes, fiscalité et gestion universitaire."],
               ["Intégration & API", "REST, GraphQL, Swagger/OpenAPI, services de paiement et notifications."],

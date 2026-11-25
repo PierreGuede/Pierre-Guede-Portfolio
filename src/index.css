@@ -286,6 +286,10 @@ html {
   transition: transform .3s ease, border-color .3s ease;
 }
 
+.experience-more {
+  display: none;
+}
+
 .experience-stop:hover {
   transform: translateY(-3px);
   border-color: rgba(15, 139, 141, .34);
@@ -894,6 +898,10 @@ a:hover .contact-arrow {
     gap: 1rem;
   }
 
+  .skills-story-main {
+    display: block;
+  }
+
   .skills-story-nav {
     z-index: 20;
     top: 4.7rem;
@@ -943,9 +951,30 @@ a:hover .contact-arrow {
   }
 
   .skills-story-panel {
+    flex: 0 0 min(88%, 520px);
+    width: min(88%, 520px);
     min-height: auto;
     padding: .65rem 0 1rem;
     scroll-margin-top: 9.5rem;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .skills-story-panels {
+    display: flex;
+    gap: .85rem;
+    width: calc(100% + 1rem);
+    margin-right: -1rem;
+    padding-right: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .skills-story-panels::-webkit-scrollbar {
+    display: none;
   }
 
   .skills-story-panel-inner {
@@ -962,10 +991,11 @@ a:hover .contact-arrow {
 
   .footer-name-wrap {
     padding-top: 2rem;
+    padding-inline: .75rem;
   }
 
   .footer-name {
-    font-size: clamp(2.6rem, 12.5vw, 5rem);
+    font-size: clamp(2.4rem, 10.5vw, 4.5rem);
     transform: translateX(-50%) scaleX(.6) scaleY(2.8);
   }
 }
@@ -1134,4 +1164,157 @@ a:hover .contact-arrow {
 
 @media (prefers-reduced-motion: reduce) {
   .portfolio-nav,.mobile-nav-panel,.mobile-nav-link { transition-duration: .01ms !important; }
+}
+
+/* Mobile story sections become touch carousels to keep the page compact. */
+@media (max-width: 640px) {
+  #experience,
+  #education,
+  #projects {
+    padding-top: 3.25rem;
+    padding-bottom: 3.25rem;
+  }
+
+  #experience .max-w-3xl,
+  #projects .projects-heading {
+    margin-bottom: 1.5rem;
+  }
+
+  .experience-track,
+  .education-pair,
+  .project-grid,
+  .about-highlights,
+  .contact-details {
+    display: flex;
+    gap: .85rem;
+    margin-right: -1rem;
+    padding: .35rem 1rem 1rem 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .experience-track::-webkit-scrollbar,
+  .education-pair::-webkit-scrollbar,
+  .project-grid::-webkit-scrollbar,
+  .about-highlights::-webkit-scrollbar,
+  .contact-details::-webkit-scrollbar {
+    display: none;
+  }
+
+  .experience-stop,
+  .education-panel,
+  .project-card,
+  .about-highlights > *,
+  .contact-details > * {
+    flex: 0 0 min(88%, 390px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .experience-stop {
+    padding: 1.15rem;
+  }
+
+  .experience-stop h3 {
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+
+  .experience-stop > div:first-child p:last-child {
+    font-size: .72rem;
+  }
+
+  .experience-stop ul {
+    gap: .55rem;
+    font-size: .88rem;
+    line-height: 1.55;
+  }
+
+  .experience-stop > ul > li:nth-child(n + 3) {
+    display: none;
+  }
+
+  .experience-more {
+    display: block;
+    margin-top: .75rem;
+    color: var(--cv-accent-strong);
+    font-size: .82rem;
+    font-weight: 650;
+  }
+
+  .experience-more summary {
+    width: fit-content;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .experience-more summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .experience-more summary::after {
+    content: ' +';
+    color: var(--cv-accent);
+  }
+
+  .experience-more[open] summary::after {
+    content: ' −';
+  }
+
+  .experience-more ul {
+    padding-left: 1rem;
+    list-style: disc;
+    font-size: .84rem;
+    line-height: 1.55;
+  }
+
+  .experience-stop .mt-5 {
+    margin-top: .85rem;
+  }
+
+  .experience-stop .cv-tag {
+    padding: .22rem .5rem;
+    font-size: .72rem;
+  }
+
+  .education-pair {
+    align-items: stretch;
+  }
+
+  .education-panel {
+    padding: 1.25rem;
+  }
+
+  .project-card {
+    min-height: 0;
+  }
+
+  .project-visual {
+    min-height: 205px;
+    padding: 1rem;
+  }
+
+  .project-flow {
+    margin-top: 1rem;
+  }
+
+  .project-card > button > div:last-child {
+    padding: 1rem;
+  }
+
+  .about-highlights > * {
+    min-height: 130px;
+    padding: 1rem;
+  }
+
+  .contact-details > * {
+    min-height: 150px;
+  }
+
+  .contact-details > *:last-child {
+    align-self: stretch;
+  }
 }
